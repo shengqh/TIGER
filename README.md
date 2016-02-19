@@ -1,5 +1,5 @@
 # TIGER
-TIGER: smallRNA pipeline
+Tools for Intensive Genome alignment of Extracelllar smallRNA (TIGER) analysis pipeline
 
 #Installation
 ```

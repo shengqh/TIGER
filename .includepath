@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includepath>
+  <includepathentry path="../ngsperl/lib" />
+  <includepathentry path="../cqsperl/lib" />
+  <includepathentry path="lib" />
+  <includepathentry path="E:\sqh\programs\perl\bioperl-live" />
+</includepath>
+

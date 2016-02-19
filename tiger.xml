@@ -1,0 +1,27 @@
+<opt>
+  <options>
+    <bowtie1_option_1mm>-a -m 100 --best --strata -v 1 -p 8</bowtie1_option_1mm>
+    <bowtie1_option_pm>-a -m 100 --best --strata -v 0 -p 8</bowtie1_option_pm>
+    <cluster>slurm</cluster>
+    <min_read_length>16</min_read_length>
+    <smallrnacount_option>-s</smallrnacount_option>
+  </options>
+  <supplement>
+    <bowtie1_miRBase_index>/data/cqs/shengq1/reference/miRBase21/bowtie_index_1.1.1/mature.dna</bowtie1_miRBase_index>
+    <bowtie1_tRNA_index>/scratch/cqs/shengq1/references/ucsc/GtRNAdb2/bowtie_index_1.1.2/GtRNAdb2.20160216.rmdup</bowtie1_tRNA_index>
+    <bowtie1_rRNAL_index>/scratch/cqs/zhaos/vickers/reference/rRna/SILVA_123_LSURef_tax_silva</bowtie1_rRNAL_index>
+    <bowtie1_rRNAS_index>/scratch/cqs/zhaos/vickers/reference/rRna/SILVA_123_SSURef_Nr99_tax_silva</bowtie1_rRNAS_index>
+    <bowtie1_bacteria_group1_index>/scratch/cqs/zhaos/vickers/reference/bacteria/group1/bacteriaDatabaseGroup1</bowtie1_bacteria_group1_index>
+    <bacteria_group1_log>/scratch/cqs/zhaos/vickers/reference/bacteria/group1/20150902.log</bacteria_group1_log>
+    <bowtie1_bacteria_group2_index>/scratch/cqs/zhaos/vickers/reference/bacteria/group2/bacteriaDatabaseGroup2</bowtie1_bacteria_group2_index>
+    <bacteria_group2_log>/scratch/cqs/zhaos/vickers/reference/bacteria/group2/20150902.log</bacteria_group2_log>
+    <bowtie1_fungus_group4_index>/scratch/cqs/zhaos/vickers/reference/bacteria/group4/bowtie_index_1.1.2/group4</bowtie1_fungus_group4_index>
+    <fungus_group4_log>/scratch/cqs/zhaos/vickers/reference/bacteria/group4/20160210.log</fungus_group4_log>
+  </supplement>
+  <hg19>
+    <bowtie1_index>/scratch/cqs/shengq1/references/hg19_MT_ensembl/bowtie_index_1.1.2/hg19_MT_ensembl_v75</bowtie1_index>
+    <coordinate>/scratch/cqs/shengq1/references/smallrna/hg19_miRBase21_GtRNAdb2_ensembl75.bed</coordinate>
+    <coordinate_fasta>/scratch/cqs/shengq1/references/smallrna/hg19_miRBase21_GtRNAdb2_ensembl75.bed.fa</coordinate_fasta>
+    <mirbase_count_option>-p hsa</mirbase_count_option>
+  </hg19>
+</opt>

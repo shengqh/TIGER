@@ -47,8 +47,14 @@ if ( !defined $genome_name ){
   exit(1);
 }  
  
-if(!-e $project_file){
+if( !defined $project_file){
   print "Input project xml file\n" ;
+  print $usage;
+  exit(1);
+} 
+ 
+if(!$create && !-e $project_file){
+  print "Project xml file not exist " . $project_file . "\n" ;
   print $usage;
   exit(1);
 } 

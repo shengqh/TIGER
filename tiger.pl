@@ -63,7 +63,7 @@ if ( defined $create ) {
   defined $config->{supplement}   or die "No supplement defined in file" . $config_file;
   defined $config->{$genome_name} or die "No $genome_name defined in file" . $config_file;
 
-  my $genome = {
+  my $database = {
     genome     => $config->{$genome_name},
     supplement => $config->{supplement}
   };
@@ -105,7 +105,7 @@ if ( defined $create ) {
     $project_options
   );
   my $project = merge(
-    $genome,
+    $database,
     {
       options => $options
     }
@@ -132,6 +132,7 @@ else {
   }
 
   my $project = eval { XMLin($project_file) };
-  performSmallRNA($project);
+  my $config = merge($project->{options}, merge($project->{genome}, $project->{supplement}));
+  performSmallRNA($config);
 }
 

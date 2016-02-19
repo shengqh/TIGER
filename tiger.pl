@@ -77,9 +77,9 @@ if ( defined $create ) {
       'max_thread' => 8,
       'cqstools'   => 'location of CQS.Tools.exe',
       'files'      => {
-        'Control1' => ['sample1.fastq.gz'],
-        'Control2' => ['sample2.fastq.gz'],
-        'Control3' => ['sample3.fastq.gz'],
+        'Control1' => ['control1.fastq.gz'],
+        'Control2' => ['control2.fastq.gz'],
+        'Control3' => ['control3.fastq.gz'],
         'Sample1'  => ['sample1.fastq.gz'],
         'Sample2'  => ['sample2.fastq.gz'],
         'Sample3'  => ['sample3.fastq.gz'],

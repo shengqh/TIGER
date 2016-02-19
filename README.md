@@ -14,6 +14,8 @@ perl 5 (http://dev.perl.org/perl5/)
 
 bowtie (http://bowtie-bio.sourceforge.net/index.shtml)
 
+mono (http://www.mono-project.com/)
+
 cqstools (https://github.com/shengqh/CQS.Tools)
 ```
 wget https://github.com/shengqh/CQS.Tools/releases/download/v1.6.7/CQS.Tools.1.6.7.zip

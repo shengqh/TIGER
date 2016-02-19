@@ -41,9 +41,18 @@ if ( defined $help ) {
   exit(1);
 }
 
-die "Input genome name in tiger.xml" if ( !defined $genome_name );
-die "Input project xml file" if ( !-e $project_file );
-
+if ( !defined $genome_name ){
+  print "Input genome name in tiger.xml\n" ;
+  print $usage;
+  exit(1);
+}  
+ 
+if(!-e $project_file){
+  print "Input project xml file\n" ;
+  print $usage;
+  exit(1);
+} 
+ 
 my $config_file = dirname(__FILE__) . "/tiger.xml";
 
 my $config = eval { XMLin($config_file) };

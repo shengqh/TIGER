@@ -18,7 +18,7 @@ perl tiger.pl -g genome -p project_file --create
 Options:
   --create                Create default project config file
   -g|--genome {string}    Genome name (such like hg19/hg38/mm10/rn5, the name in your tiger.xml file)
-  -p|--project {string}   Project config file (the definition of your fastq files, groups and pairs et.al.)
+  -p|--project {string}   Project configuration file (the definition of your fastq files, groups and pairs et.al.)
   -h|--help               This page.
 ";
 
@@ -30,9 +30,9 @@ my $create;
 my $help;
 
 GetOptions(
+  'create'      => \$create,
   'g|genome=s'  => \$genome_name,
   'p|project=s' => \$project_file,
-  'create'      => \$create,
   'h|help'      => \$help,
 );
 
@@ -75,7 +75,7 @@ if ( defined $create ) {
       'task_name'  => 'MyTask',
       'email'      => 'MyEmail',
       'max_thread' => 8,
-      'cqstools'   => 'location of CQS.Tools.exe',
+      'cqstools'   => 'location of cqstools.exe',
       'files'      => {
         'Control1' => ['control1.fastq.gz'],
         'Control2' => ['control2.fastq.gz'],
@@ -117,16 +117,17 @@ if ( defined $create ) {
     noattr     => 1
   );
   close($fh);
+  print "Project configuration file created. Please update the file using any text editor. \n"
 }
 else {
   if ( !defined $project_file ) {
-    print "Input project xml file!\n";
+    print "Project configuration file is required.\n";
     print $usage;
     exit(1);
   }
 
   if ( !-e $project_file ) {
-    print "Project xml file not exist " . $project_file . "\n";
+    print "Project configuration file not exist : " . $project_file . "\n";
     print $usage;
     exit(1);
   }

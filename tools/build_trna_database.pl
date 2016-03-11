@@ -25,7 +25,7 @@ if ( !-e $trnafa ) {
   #print $res->content;
 
   open( my $mapfile, ">$trnafamap" ) or die "Cannot create $trnafamap";
-  print $mapfile "Species\tId\n";
+  print $mapfile "Id\tSpecies\n";
 
   if ( $res->is_success ) {
     my $rescontent = $res->content;

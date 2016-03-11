@@ -32,7 +32,9 @@ if ( !-e $trnafa ) {
 
     my @categories = ( $rescontent =~ m/folder.gif" alt="\[DIR\]"> <a href="(.*?)\/"/g );
     foreach my $category (@categories) {
-      if ($category eq "virus"){
+      
+      #ignore the viruses to simplify the pie chart may drawn
+      if ($category eq "viruses"){
         continue;
       }
       

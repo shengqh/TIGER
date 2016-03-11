@@ -25,7 +25,7 @@ if ( !-e $trnafa ) {
   #print $res->content;
 
   open( my $mapfile, ">$trnafamap" ) or die "Cannot create $trnafamap";
-  print $mapfile "Id\tSpecies\n";
+  print $mapfile "Id\tName\tSpecies\n";
 
   if ( $res->is_success ) {
     my $rescontent = $res->content;
@@ -45,7 +45,7 @@ if ( !-e $trnafa ) {
       my $categoryres     = $ua->request($categoryreq);
       my $categorycontent = $categoryres->content;
 
-      my @species_array = $categorycontent =~ m/folder.gif" alt="\[DIR\]"> <a href="(.*?)"/g;
+      my @species_array = $categorycontent =~ m/folder.gif" alt="\[DIR\]"> <a href="(.*?)\/"/g;
 
       foreach my $species (@species_array) {
         print $category, " : ", $species, "\n";
@@ -59,7 +59,7 @@ if ( !-e $trnafa ) {
 
         if ( $speciescontent =~ /href="(.*?\.fa)">FASTA Seqs/ ) {
           my $file  = $1;
-          my $faurl = $speciesurl . $1;
+          my $faurl = $speciesurl . "/" . $1;
           print $faurl, "\n";
 
           `wget $faurl; cat $file >> $trnafa`;
@@ -69,7 +69,7 @@ if ( !-e $trnafa ) {
             my $seqnames = {};
             while ( my $seq = $seqio->next_seq ) {
               my $id = $seq->id;
-              print $mapfile "${id}\t${category}\n";
+              print $mapfile "${id}\t$species\t${category}\n";
             }
             unlink($file);
           }

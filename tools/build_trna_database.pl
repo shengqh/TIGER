@@ -30,7 +30,7 @@ if ( !-e $trnafa ) {
   if ( $res->is_success ) {
     my $rescontent = $res->content;
 
-    my @categories = ( $rescontent =~ m/folder.gif" alt="\[DIR\]"> <a href="(.*?)\"/g );
+    my @categories = ( $rescontent =~ m/folder.gif" alt="\[DIR\]"> <a href="(.*?)\/"/g );
     foreach my $category (@categories) {
 
       print $category, "\n";

@@ -45,7 +45,7 @@ if ( !-e $trnafa ) {
       foreach my $species (@species_array) {
         print $category, " : ", $species, "\n";
 
-        my $speciesurl     = $categoryurl . $species;
+        my $speciesurl     = $categoryurl . "/" . $species;
         my $speciesreq     = new HTTP::Request GET => $speciesurl;
         my $speciesres     = $ua->request($speciesreq);
         my $speciescontent = $speciesres->content;

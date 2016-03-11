@@ -24,13 +24,13 @@ if ( !-e $trnafa ) {
 
   #print $res->content;
 
-  open( my $mapfile, ">$trnafamap" )     or die "Cannot create $trnafamap";
+  open( my $mapfile, ">$trnafamap" ) or die "Cannot create $trnafamap";
   print $mapfile "Species\tId\n";
-  
+
   if ( $res->is_success ) {
     my $rescontent = $res->content;
 
-    my @categories = ( $rescontent =~ m/folder.gif" alt="\[DIR\]"> <a href="(.*?)"/g );
+    my @categories = ( $rescontent =~ m/folder.gif" alt="\[DIR\]"> <a href="(.*?)\\"/g );
     foreach my $category (@categories) {
 
       print $category, "\n";
@@ -58,14 +58,16 @@ if ( !-e $trnafa ) {
           print $faurl, "\n";
 
           `wget $faurl; cat $file >> $trnafa`;
-          
-          my $seqio = Bio::SeqIO->new( -file => $file, -format => 'fasta' );
-          my $seqnames      = {};
-          while ( my $seq = $seqio->next_seq ) {
-            my $id = $seq->id;
-            print $mapfile "${id}\t${category}\n";
+
+          if ( -e $file ) {
+            my $seqio = Bio::SeqIO->new( -file => $file, -format => 'fasta' );
+            my $seqnames = {};
+            while ( my $seq = $seqio->next_seq ) {
+              my $id = $seq->id;
+              print $mapfile "${id}\t${category}\n";
+            }
+            unlink($file);
           }
-          unlink($file);
         }
       }
     }

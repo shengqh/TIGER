@@ -32,7 +32,10 @@ if ( !-e $trnafa ) {
 
     my @categories = ( $rescontent =~ m/folder.gif" alt="\[DIR\]"> <a href="(.*?)\/"/g );
     foreach my $category (@categories) {
-
+      if ($category eq "virus"){
+        continue;
+      }
+      
       print $category, "\n";
 
       my $categoryurl     = $url . $category;

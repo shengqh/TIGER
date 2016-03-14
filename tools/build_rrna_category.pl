@@ -4,8 +4,10 @@ use strict;
 use File::Basename;
 use Bio::SeqIO;
 
-my $file = '/scratch/cqs/zhaos/vickers/reference/rRna/SILVA_123_LSURef_tax_silva.fasta';
-my $log  = "/scratch/cqs/shengq1/references/smallrna/SILVA_123_LSURef_tax_silva.category.map";
+my $file = '/scratch/cqs/zhaos/vickers/reference/rRna/SILVA_123_SSURef_Nr99_tax_silva.fasta';
+my $log  = "/scratch/cqs/shengq1/references/smallrna/SILVA_123_SSURef_Nr99_tax_silva.category.map";
+#my $file = '/scratch/cqs/zhaos/vickers/reference/rRna/SILVA_123_LSURef_tax_silva.fasta';
+#my $log  = "/scratch/cqs/shengq1/references/smallrna/SILVA_123_LSURef_tax_silva.category.map";
 #my $file = 'h:/shengquanhu/projects/database/rrna/SILVA_123_LSURef_tax_silva.fasta';
 #my $log  = "h:/shengquanhu/projects/database/rrna/SILVA_123_LSURef_tax_silva.category.map";
 

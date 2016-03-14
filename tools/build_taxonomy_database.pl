@@ -55,11 +55,15 @@ my $child_parent_id_map = read_map( $nodesDB, 0 );
 my $id_name_map         = read_map( $namesDB, 0 );
 my $name_id_map         = read_map( $namesDB, 1 );
 
+for my $name ( sort keys %$name_id_map ) {
+  print $name, "\t", $name_id_map->{$name}, "\n";
+}
+
 sub get_category_by_id {
   my $species_id   = shift;
   my $species_name = $id_name_map->{$species_id};
   print $species_name, "\n";
-  my $category     = $categories->{$species_name};
+  my $category = $categories->{$species_name};
   if ($category) {
     return $category;
   }

@@ -42,62 +42,62 @@ if ( !-e $nodesDB ) {
   `grep "scientific name" names.dmp | cut -f1,3 > $namesDB`;
 }
 
-if ( !-e $categoryDB ) {
+my $categories = {
+  "Archaea"     => "Archaea",
+  "Bacteria"    => "Bacteria",
+  "Eukarya"     => "Eukarya",
+  "Embryophyta" => "Embryophyta",
+  "Fungi"       => "Fungi",
+  "Vertebrata"  => "Vertebrata"
+};
 
-  my $categories = {
-    "Archaea"     => "Archaea",
-    "Bacteria"    => "Bacteria",
-    "Eukarya"     => "Eukarya",
-    "Embryophyta" => "Embryophyta",
-    "Fungi"       => "Fungi",
-    "Vertebrata"  => "Vertebrata"
-  };
+my $child_parent_id_map = read_map( $nodesDB, 0 );
+my $id_name_map         = read_map( $namesDB, 0 );
+my $name_id_map         = read_map( $namesDB, 1 );
 
-  my $child_parent_id_map = read_map( $nodesDB, 0 );
-  my $id_name_map         = read_map( $namesDB, 0 );
-  my $name_id_map         = read_map( $namesDB, 1 );
-
-  sub get_category_by_id {
-    my $species_id   = shift;
-    my $species_name = $id_name_map->{$species_id};
-    my $category     = $categories->{$species_name};
-    if ($category) {
-      return $category;
-    }
-    else {
-      my $parent_id = $child_parent_id_map->{$species_id};
-      if ($parent_id) {
-        if ( $parent_id == $species_id ) {
-          return "Others";
-        }
-        else {
-          return get_category_by_id($parent_id);
-        }
-      }
-      else {
+sub get_category_by_id {
+  my $species_id   = shift;
+  my $species_name = $id_name_map->{$species_id};
+  print $species_name, "\n";
+  my $category     = $categories->{$species_name};
+  if ($category) {
+    return $category;
+  }
+  else {
+    my $parent_id = $child_parent_id_map->{$species_id};
+    if ($parent_id) {
+      if ( $parent_id == $species_id ) {
         return "Others";
       }
-    }
-  }
-
-  sub get_category_by_name {
-    my $species_name = shift;
-    my $species_id   = $name_id_map->{$species_name};
-    if ($species_id) {
-      return get_category_by_id($species_id);
+      else {
+        return get_category_by_id($parent_id);
+      }
     }
     else {
-      die "Cannot find taxonomy id for " . $species_name;
+      return "Others";
     }
   }
-
-  open( my $output, ">$categoryDB" ) or die "Cannot write to $categoryDB";
-
-  for my $id ( sort keys %$id_name_map ) {
-    my $species_name = $id_name_map->{$id};
-    my $category     = get_category_by_id($id);
-    print $output $species_name, "\t", $category, "\n";
-  }
-  close($output);
 }
+
+sub get_category_by_name {
+  my $species_name = shift;
+  my $species_id   = $name_id_map->{$species_name};
+  if ($species_id) {
+    return get_category_by_id($species_id);
+  }
+  else {
+    die "Cannot find taxonomy id for " . $species_name;
+  }
+}
+
+print get_category_by_name("Chrysotimus");
+
+#open( my $output, ">$categoryDB" ) or die "Cannot write to $categoryDB";
+#for my $id ( sort keys %$id_name_map ) {
+#  my $species_name = $id_name_map->{$id};
+#  my $category     = get_category_by_id($id);
+#  print $output $species_name, "\t", $category, "\n";
+#}
+#close($output);
+
 exit(1);

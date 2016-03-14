@@ -58,7 +58,7 @@ my $child_parent_id_map = read_map($nodesDB);
 sub get_category_by_id {
   my $species_id   = shift;
   my $species_name = $id_name_map->{$species_id};
-  print $species_name, "\n";
+  #print $species_name, "\n";
   my $category = $categories->{$species_name};
   if ($category) {
     return $category;
@@ -90,14 +90,14 @@ sub get_category_by_name {
   }
 }
 
-print get_category_by_name("Chrysotimus");
+#print get_category_by_name("Chrysotimus");
 
-#open( my $output, ">$categoryDB" ) or die "Cannot write to $categoryDB";
-#for my $id ( sort keys %$id_name_map ) {
-#  my $species_name = $id_name_map->{$id};
-#  my $category     = get_category_by_id($id);
-#  print $output $species_name, "\t", $category, "\n";
-#}
-#close($output);
+open( my $output, ">$categoryDB" ) or die "Cannot write to $categoryDB";
+for my $id ( sort keys %$id_name_map ) {
+  my $species_name = $id_name_map->{$id};
+  my $category     = get_category_by_id($id);
+  print $output $species_name, "\t", $category, "\n";
+}
+close($output);
 
 exit(1);

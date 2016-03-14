@@ -46,9 +46,10 @@ my $categories = {
   "Vertebrata"  => "Vertebrata"
 };
 
-my $child_parent_id_map = read_map($nodesDB);
 my $id_name_map         = read_map($namesDB);
-my $name_id_map         = reverse $id_name_map;
+my $name_id_map         = \(reverse %$id_name_map);
+
+my $child_parent_id_map = read_map($nodesDB);
 
 for my $name ( sort keys %$name_id_map ) {
   print $name, "\t", $name_id_map->{$name}, "\n";

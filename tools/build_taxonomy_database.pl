@@ -12,7 +12,7 @@ my $namesDB    = "names.scientific.map";
 my $categoryDB = "category.map";
 
 sub read_map {
-  my ( $filename, $reverse ) = shift;
+  my ($filename) = shift;
   open( my $file, "<$filename" ) or die "Cannot open file $filename";
   my $result = {};
   while ( my $line = (<$file>) ) {
@@ -24,12 +24,7 @@ sub read_map {
     next unless $line =~ /^(\S*)\s*(\S*)$/;
 
     # insert into %map
-    if ($reverse) {
-      $result->{$2} = $1;
-    }
-    else {
-      $result->{$1} = $2;
-    }
+    $result->{$1} = $2;
   }
   close($file);
   return $result;
@@ -51,9 +46,9 @@ my $categories = {
   "Vertebrata"  => "Vertebrata"
 };
 
-my $child_parent_id_map = read_map( $nodesDB, 0 );
-my $id_name_map         = read_map( $namesDB, 0 );
-my $name_id_map         = read_map( $namesDB, 1 );
+my $child_parent_id_map = read_map($nodesDB);
+my $id_name_map         = read_map($namesDB);
+my $name_id_map         = reverse $id_name_map;
 
 for my $name ( sort keys %$name_id_map ) {
   print $name, "\t", $name_id_map->{$name}, "\n";

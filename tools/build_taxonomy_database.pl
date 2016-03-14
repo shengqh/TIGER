@@ -7,9 +7,10 @@ use LWP::UserAgent;
 use Bio::SeqIO;
 use POSIX qw(strftime);
 
-my $nodesDB    = "nodes.parent.map";
-my $namesDB    = "names.scientific.map";
-my $categoryDB = "category.map";
+my $nodesDB         = "nodes.parent.map";
+my $namesDB         = "names.scientific.map";
+my $trna_categoryDB = "trna_category.map";
+my $rrna_categoryDB = "rrna_category.map";
 
 sub read_map {
   my ($filename) = shift;
@@ -37,16 +38,6 @@ if ( !-e $nodesDB ) {
   `grep "scientific name" names.dmp | cut -f1,3 > $namesDB`;
 }
 
-my $categories = {
-  "Archaea"     => "Archaea",
-  "Bacteria"    => "Bacteria",
-  "Eukaryota"   => "Eukaryota",
-  "Embryophyta" => "Embryophyta",
-  "Fungi"       => "Fungi",
-  "Vertebrata"  => "Vertebrata",
-  "Viruses"     => "Viruses"
-};
-
 my $id_name_map = read_map($namesDB);
 my %name_id_map = reverse %$id_name_map;
 
@@ -57,7 +48,7 @@ my $child_parent_id_map = read_map($nodesDB);
 #}
 
 sub get_category_by_id {
-  my $species_id   = shift;
+  my ( $species_id, $categories ) = @_;
   my $species_name = $id_name_map->{$species_id};
 
   #print $species_name, "\n";
@@ -72,7 +63,7 @@ sub get_category_by_id {
         return "Others";
       }
       else {
-        return get_category_by_id($parent_id);
+        return get_category_by_id( $parent_id, $categories );
       }
     }
     else {
@@ -82,10 +73,10 @@ sub get_category_by_id {
 }
 
 sub get_category_by_name {
-  my $species_name = shift;
-  my $species_id   = $name_id_map{$species_name};
+  my ( $species_name, $categories ) = @_;
+  my $species_id = $name_id_map{$species_name};
   if ($species_id) {
-    return get_category_by_id($species_id);
+    return get_category_by_id( $species_id, $categories );
   }
   else {
     die "Cannot find taxonomy id for " . $species_name;
@@ -94,12 +85,41 @@ sub get_category_by_name {
 
 #print get_category_by_name("Chrysotimus");
 
-open( my $output, ">$categoryDB" ) or die "Cannot write to $categoryDB";
+my $trna_categories = {
+  "Archaea"     => "Archaea",
+  "Bacteria"    => "Bacteria",
+  "Eukaryota"   => "Eukaryota",
+  "Embryophyta" => "Embryophyta",
+  "Fungi"       => "Fungi",
+  "Vertebrata"  => "Vertebrata",
+  "Viruses"     => "Viruses"
+};
+
+open( my $trna_output, ">$trna_categoryDB" ) or die "Cannot write to $trna_categoryDB";
 for my $id ( sort keys %$id_name_map ) {
   my $species_name = $id_name_map->{$id};
-  my $category     = get_category_by_id($id);
-  print $output $species_name, "\t", $category, "\n";
+  my $category = get_category_by_id( $id, $trna_categories );
+  print $trna_output $species_name, "\t", $category, "\n";
 }
-close($output);
+close($trna_output);
+
+#my $rrna_categories = {
+#  "Archaea"     => "Archaea",
+#  "Bacteria"    => "Bacteria",
+#  "Eukaryota"   => "Eukaryota",
+#  "Embryophyta" => "Embryophyta",
+#  "Fungi"       => "Fungi",
+#  "Vertebrata"  => "Vertebrata",
+#  "Viruses"     => "Viruses"
+#};
+#
+#open( my $rrna_output, ">$rrna_categoryDB" ) or die "Cannot write to $rrna_categoryDB";
+#for my $id ( sort keys %$id_name_map ) {
+#  my $species_name = $id_name_map->{$id};
+#  my $category = get_category_by_id( $id, $rrna_categories );
+#  print $rrna_output $species_name, "\t", $category, "\n";
+#}
+#close($rrna_output);
+
 
 exit(1);

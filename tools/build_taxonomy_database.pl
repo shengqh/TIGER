@@ -67,7 +67,12 @@ if ( !-e $categoryDB ) {
     else {
       my $parent_id = $child_parent_id_map->{$species_id};
       if ($parent_id) {
-        return get_category_by_id($parent_id);
+        if ( $parent_id == $species_id ) {
+          return $species_name;
+        }
+        else {
+          return get_category_by_id($parent_id);
+        }
       }
       else {
         return "Others";

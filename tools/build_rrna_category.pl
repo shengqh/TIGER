@@ -6,6 +6,8 @@ use Bio::SeqIO;
 
 my $file = '/scratch/cqs/zhaos/vickers/reference/rRna/SILVA_123_LSURef_tax_silva.fasta';
 my $log  = "/scratch/cqs/shengq1/references/smallrna/SILVA_123_LSURef_tax_silva.category.map";
+#my $file = 'h:/shengquanhu/projects/database/rrna/SILVA_123_LSURef_tax_silva.fasta';
+#my $log  = "h:/shengquanhu/projects/database/rrna/SILVA_123_LSURef_tax_silva.category.map";
 
 my @categories = ( "Embryophyta", "Archaeplastida", "Fungi", "SAR", "Excavata", "Amoebozoa", "Choanozoa", "Metazoa (Animalia)", "Archaea", "Bacteria", "Eukaryota" );
 my %categoryMap = (
@@ -25,7 +27,7 @@ while ( my $seq = $seqio->next_seq ) {
   my $category = "Others";
   for my $cat (@categories) {
     if ( $id =~ /${cat};/ ) {
-      my $category = $categoryMap{$cat} ? $categoryMap{$cat} : $cat;
+      $category = $categoryMap{$cat} ? $categoryMap{$cat} : $cat;
       last;
     }
   }

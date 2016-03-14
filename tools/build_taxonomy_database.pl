@@ -68,7 +68,7 @@ if ( !-e $categoryDB ) {
       my $parent_id = $child_parent_id_map->{$species_id};
       if ($parent_id) {
         if ( $parent_id == $species_id ) {
-          return $species_name;
+          return "Others";
         }
         else {
           return get_category_by_id($parent_id);
@@ -96,7 +96,7 @@ if ( !-e $categoryDB ) {
   for my $id ( sort keys %$id_name_map ) {
     my $species_name = $id_name_map->{$id};
     my $category     = get_category_by_id($id);
-    print $output, $species_name, "\t", $category, "\n";
+    print $output $species_name, "\t", $category, "\n";
   }
   close($output);
 }

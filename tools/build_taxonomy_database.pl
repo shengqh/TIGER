@@ -43,7 +43,8 @@ my $categories = {
   "Eukaryota"   => "Eukaryota",
   "Embryophyta" => "Embryophyta",
   "Fungi"       => "Fungi",
-  "Vertebrata"  => "Vertebrata"
+  "Vertebrata"  => "Vertebrata",
+  "Viruses"     => "Viruses"
 };
 
 my $id_name_map = read_map($namesDB);
@@ -58,6 +59,7 @@ my $child_parent_id_map = read_map($nodesDB);
 sub get_category_by_id {
   my $species_id   = shift;
   my $species_name = $id_name_map->{$species_id};
+
   #print $species_name, "\n";
   my $category = $categories->{$species_name};
   if ($category) {

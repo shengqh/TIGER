@@ -40,20 +40,20 @@ if ( !-e $nodesDB ) {
 my $categories = {
   "Archaea"     => "Archaea",
   "Bacteria"    => "Bacteria",
-  "Eukarya"     => "Eukarya",
+  "Eukaryota"   => "Eukaryota",
   "Embryophyta" => "Embryophyta",
   "Fungi"       => "Fungi",
   "Vertebrata"  => "Vertebrata"
 };
 
-my $id_name_map         = read_map($namesDB);
-my %name_id_map         = reverse %$id_name_map;
+my $id_name_map = read_map($namesDB);
+my %name_id_map = reverse %$id_name_map;
 
 my $child_parent_id_map = read_map($nodesDB);
 
-for my $name ( sort keys %name_id_map ) {
-  print $name, "\t", $name_id_map{$name}, "\n";
-}
+#for my $name ( sort keys %name_id_map ) {
+#  print $name, "\t", $name_id_map{$name}, "\n";
+#}
 
 sub get_category_by_id {
   my $species_id   = shift;

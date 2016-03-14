@@ -22,7 +22,7 @@ sub read_map {
     chomp $line;
 
     # skip malformed lines.  for something important you'd print an error instead
-    next unless $line =~ /^(\S*)\s*(\S*)$/;
+    next unless $line =~ /^(\S*)\s*(.+)$/;
 
     # insert into %map
     $result->{$1} = $2;

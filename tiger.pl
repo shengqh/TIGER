@@ -10,6 +10,7 @@ use File::Slurp;
 use Pipeline::SmallRNA;
 use Pipeline::SmallRNAUtils;
 use Data::Dumper;
+use CQS::ClassFactory;
 
 my $usage = "
 

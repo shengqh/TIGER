@@ -133,7 +133,9 @@ else {
 
   my $project;
   if ( $project_file =~ /.pl$/ ) {
-    $project = eval { read_file($project_file) };
+    my $filecontent = read_file($project_file);
+    print $filecontent; 
+    $project = eval { $filecontent };
   }
   else {
     $project = eval { XMLin($project_file) };

@@ -136,8 +136,9 @@ else {
     $project = eval { XMLin($project_file) };
   }else{
     my $filecontent = read_file($project_file);
-    $filecontent =~ s/\$VAR1 = //g;
-    $project = eval {$filecontent };
+    my $VAR1;
+    eval $filecontent;
+    $project = $VAR1;
     print Dumper($project);
   }
   

@@ -49,31 +49,33 @@ if ( !-e $trnafa ) {
         print $category, " : ", $species, "\n";
         
         print $smapfile $species, "\t", $category, "\n";
-
-        my $speciesurl     = $categoryurl . "/" . $species;
-        my $speciesreq     = new HTTP::Request GET => $speciesurl;
-        my $speciesres     = $ua->request($speciesreq);
-        my $speciescontent = $speciesres->content;
-
-        #print $speciescontent, "\n";
-
-        if ( $speciescontent =~ /href="(.*?\.fa)">FASTA Seqs/ ) {
-          my $file  = $1;
-          my $faurl = $speciesurl . "/" . $1;
-          print $faurl, "\n";
-
-          `wget $faurl; cat $file >> $trnafa`;
-
-          if ( -e $file ) {
-            my $seqio = Bio::SeqIO->new( -file => $file, -format => 'fasta' );
-            my $seqnames = {};
-            while ( my $seq = $seqio->next_seq ) {
-              my $id = $seq->id;
-              print $mapfile "${id}\t$species\t${category}\n";
-            }
-            unlink($file);
-          }
-        }
+        
+        next;
+#
+#        my $speciesurl     = $categoryurl . "/" . $species;
+#        my $speciesreq     = new HTTP::Request GET => $speciesurl;
+#        my $speciesres     = $ua->request($speciesreq);
+#        my $speciescontent = $speciesres->content;
+#
+#        #print $speciescontent, "\n";
+#
+#        if ( $speciescontent =~ /href="(.*?\.fa)">FASTA Seqs/ ) {
+#          my $file  = $1;
+#          my $faurl = $speciesurl . "/" . $1;
+#          print $faurl, "\n";
+#
+#          `wget $faurl; cat $file >> $trnafa`;
+#
+#          if ( -e $file ) {
+#            my $seqio = Bio::SeqIO->new( -file => $file, -format => 'fasta' );
+#            my $seqnames = {};
+#            while ( my $seq = $seqio->next_seq ) {
+#              my $id = $seq->id;
+#              print $mapfile "${id}\t$species\t${category}\n";
+#            }
+#            unlink($file);
+#          }
+#        }
       }
     }
   }

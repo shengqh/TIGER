@@ -136,10 +136,9 @@ else {
     $project = eval { XMLin($project_file) };
   }else{
     my $filecontent = read_file($project_file);
-    $project = eval ($filecontent );
+    $project = eval {$filecontent };
+    print Dumper($project);
   }
-  
-  print Dumper($project);
   
   my $config = merge( $project->{options}, merge( $project->{genome}, $project->{supplement} ) );
   performSmallRNA($config);

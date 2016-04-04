@@ -134,7 +134,7 @@ else {
   my $project;
   if ( $project_file =~ /.pl$/ ) {
     my $filecontent = read_file($project_file);
-    print $filecontent; 
+    print $filecontent, "\n"; 
     $project = eval { $filecontent };
   }
   else {

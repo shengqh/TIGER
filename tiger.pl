@@ -131,18 +131,17 @@ else {
     exit(1);
   }
 
-  my $project;
+  my $config;
   if ( $project_file =~ /.xml$/ ) {
-    $project = eval { XMLin($project_file) };
+    my $project = eval { XMLin($project_file) };
+    $config = merge( $project->{options}, merge( $project->{genome}, $project->{supplement} ) );
   }else{
     my $filecontent = read_file($project_file);
     my $VAR1;
     eval $filecontent;
-    $project = $VAR1;
-    print Dumper($project);
+    $config = $VAR1;
   }
   
-  my $config = merge( $project->{options}, merge( $project->{genome}, $project->{supplement} ) );
   performSmallRNA($config);
 }
 

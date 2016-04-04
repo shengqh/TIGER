@@ -135,13 +135,13 @@ else {
   if ( $project_file =~ /.xml$/ ) {
     my $project = eval { XMLin($project_file) };
     $config = merge( $project->{options}, merge( $project->{genome}, $project->{supplement} ) );
+    performSmallRNA($config);
   }else{
     my $filecontent = read_file($project_file);
     my $VAR1;
     eval $filecontent;
     $config = $VAR1;
+    performConfig($config);    
   }
-  
-  performSmallRNA($config);
 }
 

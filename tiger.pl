@@ -9,6 +9,7 @@ use Hash::Merge qw( merge );
 use File::Slurp;
 use Pipeline::SmallRNA;
 use Pipeline::SmallRNAUtils;
+use Data::Dumper;
 
 my $usage = "
 
@@ -137,6 +138,9 @@ else {
   else {
     $project = eval { XMLin($project_file) };
   }
+  
+  print Dumper($project);
+  
   my $config = merge( $project->{options}, merge( $project->{genome}, $project->{supplement} ) );
   performSmallRNA($config);
 }

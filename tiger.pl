@@ -6,6 +6,7 @@ use File::Basename;
 use Getopt::Long;
 use XML::Simple;
 use Hash::Merge qw( merge );
+use File::Slurp;
 use Pipeline::SmallRNA;
 use Pipeline::SmallRNAUtils;
 
@@ -41,7 +42,7 @@ if ( defined $help ) {
   exit(1);
 }
 
-my $merge = Hash::Merge->new( 'LEFT_PRECEDENT' );
+my $merge = Hash::Merge->new('LEFT_PRECEDENT');
 
 if ( defined $create ) {
   if ( !defined $genome_name ) {
@@ -71,7 +72,7 @@ if ( defined $create ) {
   my $project_options;
   if ( !-e $project_file ) {
     $project_options = {
-      'target_dir' => 'my_target_folder',
+      'target_dir' => 'MyTargetFolder',
       'task_name'  => 'MyTask',
       'email'      => 'MyEmail',
       'max_thread' => 8,
@@ -100,10 +101,7 @@ if ( defined $create ) {
     $project_options = $oldproject->{options};
   }
 
-  my $options = merge(
-    $config->{options},
-    $project_options
-  );
+  my $options = merge( $config->{options}, $project_options );
   my $project = merge(
     $database,
     {
@@ -117,7 +115,7 @@ if ( defined $create ) {
     noattr     => 1
   );
   close($fh);
-  print "Project configuration file created. Please update the file using any text editor. \n"
+  print "Project configuration file created. Please update the file using any text editor. \n";
 }
 else {
   if ( !defined $project_file ) {
@@ -132,8 +130,14 @@ else {
     exit(1);
   }
 
-  my $project = eval { XMLin($project_file) };
-  my $config = merge($project->{options}, merge($project->{genome}, $project->{supplement}));
+  my $project;
+  if ( $project_file =~ /.pl$/ ) {
+    $project = eval { read_file($project_file) };
+  }
+  else {
+    $project = eval { XMLin($project_file) };
+  }
+  my $config = merge( $project->{options}, merge( $project->{genome}, $project->{supplement} ) );
   performSmallRNA($config);
 }
 

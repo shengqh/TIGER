@@ -10,6 +10,7 @@ use POSIX qw(strftime);
 my $datestring = strftime "%Y%m%d", localtime;
 my $trnafa     = "GtRNAdb2." . $datestring . ".fa";
 my $trnafamap  = $trnafa . ".map";
+my $trnafaspecies  = $trnafa . ".speciesmap";
 
 if ( !-e $trnafa ) {
   my $ua = new LWP::UserAgent;
@@ -27,6 +28,9 @@ if ( !-e $trnafa ) {
   open( my $mapfile, ">$trnafamap" ) or die "Cannot create $trnafamap";
   print $mapfile "Id\tName\tSpecies\n";
 
+  open( my $smapfile, ">$trnafaspecies" ) or die "Cannot create $trnafaspecies";
+  print $smapfile "Species\tCategory\n";
+
   if ( $res->is_success ) {
     my $rescontent = $res->content;
 
@@ -43,6 +47,8 @@ if ( !-e $trnafa ) {
 
       foreach my $species (@species_array) {
         print $category, " : ", $species, "\n";
+        
+        print $smapfile $species, "\t", $category, "\n";
 
         my $speciesurl     = $categoryurl . "/" . $species;
         my $speciesreq     = new HTTP::Request GET => $speciesurl;
@@ -71,6 +77,9 @@ if ( !-e $trnafa ) {
       }
     }
   }
+  
+  close($smapfile);
+  close($mapfile);
 }
 my $script         = dirname(__FILE__) . "/remove_duplicate_sequence.pl";
 my $trnaRmdupFasta = "GtRNAdb2." . $datestring . ".rmdup.fa";

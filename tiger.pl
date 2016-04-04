@@ -132,13 +132,11 @@ else {
   }
 
   my $project;
-  if ( $project_file =~ /.pl$/ ) {
-    my $filecontent = read_file($project_file);
-    print $filecontent, "\n"; 
-    $project = eval { $filecontent };
-  }
-  else {
+  if ( $project_file =~ /.xml$/ ) {
     $project = eval { XMLin($project_file) };
+  }else{
+    my $filecontent = read_file($project_file);
+    $project = eval { $filecontent };
   }
   
   print Dumper($project);

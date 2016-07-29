@@ -52,6 +52,7 @@ samtools is widely used in next generation sequencing analysis
 
 ###R package used in TIGER
 install.packages('DT')
+install.packages('Rcpp')
 install.packages('ggplot2')
 install.packages('heatmap3')
 install.packages('RColorBrewer')

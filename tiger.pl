@@ -19,14 +19,16 @@ Synopsis:
 perl tiger.pl -g genome -p project_file --create
 
 Options:
-  --create                Create default project config file
-  -g|--genome {string}    Genome name (such like hg19/hg38/mm10/rn5, the name in your tiger.xml file)
+  --create                Create default project configuration file
+  -f|--config {string}    TIGER configuration file (default tiger.xml)
+  -g|--genome {string}    Genome name (such like hg19/hg38/mm10/rn5) in TIGER configuration file)
   -p|--project {string}   Project configuration file (the definition of your fastq files, groups and pairs et.al.)
   -h|--help               This page.
 ";
 
 Getopt::Long::Configure('bundling');
 
+my $config_file;
 my $genome_name;
 my $project_file;
 my $create;
@@ -34,6 +36,7 @@ my $help;
 
 GetOptions(
   'create'      => \$create,
+  'f|config=s'  => \$config_file,
   'g|genome=s'  => \$genome_name,
   'p|project=s' => \$project_file,
   'h|help'      => \$help,
@@ -44,22 +47,25 @@ if ( defined $help ) {
   exit(1);
 }
 
+if ( !defined $config_file ) {
+  $config_file = dirname(__FILE__) . "/tiger.xml";
+}
+
 my $merge = Hash::Merge->new('LEFT_PRECEDENT');
 
 if ( defined $create ) {
   if ( !defined $genome_name ) {
-    print "Input genome name in tiger.xml\n";
+    print "Input genome name in $config_file\n";
     print $usage;
     exit(1);
   }
 
   if ( !defined $project_file ) {
-    print "Input project xml file\n";
+    print "Input project xml file you want to save\n";
     print $usage;
     exit(1);
   }
 
-  my $config_file = dirname(__FILE__) . "/tiger.xml";
   my $config = eval { XMLin($config_file) };
 
   defined $config->{options}      or die "No options defined in file " . $config_file;
@@ -137,12 +143,13 @@ else {
     my $project = eval { XMLin($project_file) };
     $config = merge( $project->{options}, merge( $project->{genome}, $project->{supplement} ) );
     performSmallRNA($config);
-  }else{
+  }
+  else {
     my $filecontent = read_file($project_file);
     my $VAR1;
     eval $filecontent;
     $config = $VAR1;
-    performConfig($config);    
+    performConfig($config);
   }
 }
 

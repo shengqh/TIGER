@@ -1,7 +1,7 @@
 <opt>
   <options>
-    <bowtie1_option_1mm>-a -m 100 --best --strata -v 1 -p 8</bowtie1_option_1mm>
-    <bowtie1_option_pm>-a -m 100 --best --strata -v 0 -p 8</bowtie1_option_pm>
+    <bowtie1_option_1mm>-a -m 100 --best --strata -v 1</bowtie1_option_1mm>
+    <bowtie1_option_pm>-a -m 100 --best --strata -v 0</bowtie1_option_pm>
     <cluster>slurm</cluster>
     <min_read_length>16</min_read_length>
     <smallrnacount_option>-s</smallrnacount_option>

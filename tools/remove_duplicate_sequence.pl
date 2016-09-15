@@ -105,7 +105,7 @@ for my $seq ( keys %{$sequences} ) {
 $seq
 ";
   if ( scalar(@ids) > 1 ) {
-    print $fastaid "$id\t" . join( ";", @ids ) . "\n";
+    print $fastaid "$id\t" . join( " !! ", @ids ) . "\n";
   }
 }
 close($fasta);

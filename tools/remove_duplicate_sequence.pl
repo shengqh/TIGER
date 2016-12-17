@@ -68,6 +68,8 @@ while ( my $seq = $seqio->next_seq ) {
   if ( !exists $seqnames->{$id} ) {
     $seqnames->{$id} = $seq->seq;
     $uniqueidcount++;
+  }else{
+    print STDERR $id . "\n";
   }
 }
 
@@ -98,9 +100,10 @@ system("cat ${outputFile}.info");
 my $dupidfile = "${outputFile}.dupid";
 open( my $fasta,   ">$outputFile" ) or die "Cannot create $outputFile";
 open( my $fastaid, ">$dupidfile" )  or die "Cannot create $dupidfile";
-for my $seq ( keys %{$sequences} ) {
+for my $seq ( sort keys %{$sequences} ) {
   my @ids = @{ $sequences->{$seq} };
-  my $id  = $ids[0];
+  @ids = sort(@ids);
+  my $id = $ids[0];
   print $fasta ">$id
 $seq
 ";

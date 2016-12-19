@@ -8,6 +8,13 @@ use Bio::SeqIO;
 use POSIX qw(strftime);
 use URI::Escape;
 
+my $target_dir      = "/scratch/cqs/shengq1/references/ucsc/GtRNAdb2/";
+my $target_dir_temp = $target_dir . "temp/";
+if ( !-e $target_dir_temp ) {
+  mkdir($target_dir_temp) or die "cannot mkdir directory: $!\n";
+}
+chdir($target_dir_temp) or die "cannot change: $!\n";
+
 sub getStructure {
   my $structureFile = shift;
 
@@ -41,10 +48,6 @@ sub getStructure {
 
         foreach my $species (@species_array) {
           if ( $species =~ /_old/ ) {
-            next;
-          }
-
-          if ( $species =~ /Hsapi38/ ) {
             next;
           }
           my $speciesurl     = $categoryurl . "/" . $species;
@@ -173,11 +176,34 @@ sub dealFile {
   }
 }
 
-my $datestring = strftime "%Y%m%d", localtime;
+sub extractFile {
+  my ( $inputFile, $pattern, $outputFile, $overwrite ) = @_;
 
-chdir("/scratch/cqs/shengq1/references/ucsc/GtRNAdb2/temp/") or die "cannot change: $!\n";
+  if ( -s $outputFile && !$overwrite ) {
+    print STDOUT "$outputFile exists, ignored.\n";
+    return;
+  }
 
-#dealFile("acidHosp1-tRNAs.bed", "acidHosp1-tRNAs.fa", 1);
+  print STDOUT "Extracting $outputFile ...\n";
+  open( my $output, ">$outputFile" ) or die "Could not create file '$outputFile' $!";
+
+  my $seqio = Bio::SeqIO->new( -file => $inputFile, -format => 'fasta' );
+  while ( my $seq = $seqio->next_seq ) {
+    my $id       = $seq->id;
+    my $desc     = $seq->desc;
+    my $sequence = $seq->seq;
+
+    if ( $id =~ /$pattern/ ) {
+      print $output ">$id $desc\n$sequence\n";
+    }
+  }
+
+  close($output);
+  print STDOUT "$outputFile extracted.\n";
+}
+
+#my $datestring = strftime "%Y%m%d", localtime;
+my $datestring = "20161214";
 
 my $structureFile = "../GtRNAdb2." . $datestring . ".structure.tsv";
 my $structures    = getStructure($structureFile);
@@ -192,6 +218,11 @@ my $trnafaspecies   = $prefix . ".speciesmap";
 my $trnafaTmp = $trnafa . ".tmp";
 
 my $idmap = {};
+
+my $ignoreSpecies = {
+  "Mmusc"   => 1,
+  "Hsapi38" => 1,
+};
 
 if ( !-e $trnafa ) {
   if ( -e $trnafaTmp ) {
@@ -215,6 +246,11 @@ if ( !-e $trnafa ) {
     my $file     = @$species_array[2];
     my $tarUrl   = @$species_array[3];
     my $faUrl    = @$species_array[4];
+    
+    if($ignoreSpecies->{$species}){
+      print STDERR "WARNING: " . $species . " ignored.\n";
+      next;
+    }
 
     print $category . " : " . $species . "\n";
 
@@ -253,5 +289,9 @@ if ( !-e $trnafa ) {
 
   `mv $trnafaTmp $trnafa`;
 }
+
+extractFile( $trnafa, "Homo_sapiens",      "../GtRNAdb2.${datestring}.mature.Homo_sapiens.fa" );
+extractFile( $trnafa, "Mus_musculus",      "../GtRNAdb2.${datestring}.mature.Mus_musculus.fa" );
+extractFile( $trnafa, "Rattus_norvegicus", "../GtRNAdb2.${datestring}.mature.Rattus_norvegicus.fa" );
 
 exit(1);

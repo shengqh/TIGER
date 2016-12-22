@@ -16,7 +16,7 @@ Build rRNA category map file
 
 Synopsis:
 
-perl remove_duplicate_id.pl -i fastaFile -o outputFile
+perl build_rrna_category.pl -i fastaFile -o outputFile
 
 Options:
 

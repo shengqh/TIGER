@@ -1,16 +1,58 @@
 #!/usr/bin/env perl
 
 use strict;
+use warnings;
 use File::Basename;
 use LWP::Simple;
 use LWP::UserAgent;
 use Bio::SeqIO;
 use POSIX qw(strftime);
+use Getopt::Long;
+
+sub run_command {
+  my $command = shift;
+  print "$command \n";
+  `$command `;
+}
+
+my $usage = "
+Build taxonomy database file
+
+Synopsis:
+
+perl build_taxonomy_database.pl -o outputFilePrefix
+
+Options:
+
+  -o|--outputFilePrefix {STRING}   Output file prefix
+  -h|--help                        This page.
+";
+
+Getopt::Long::Configure('bundling');
+
+my $outputDirectory;
+my $help;
+
+GetOptions(
+  'h|help'             => \$help,
+  'o|tagetDirectory=s' => \$outputDirectory,
+);
+
+if ( defined $help ) {
+  print $usage;
+  exit(1);
+}
+
+if ( !defined $outputDirectory ) {
+  die "Output directory required";
+}
+else {
+  chdir($outputDirectory) or die "Cannot change to directory " . $outputDirectory;
+}
 
 my $nodesDB         = "nodes.parent.map";
 my $namesDB         = "names.scientific.map";
 my $trna_categoryDB = "trna_category.map";
-my $rrna_categoryDB = "rrna_category.map";
 
 sub read_map {
   my ($filename) = shift;
@@ -42,10 +84,6 @@ my $id_name_map = read_map($namesDB);
 my %name_id_map = reverse %$id_name_map;
 
 my $child_parent_id_map = read_map($nodesDB);
-
-#for my $name ( sort keys %name_id_map ) {
-#  print $name, "\t", $name_id_map{$name}, "\n";
-#}
 
 sub get_category_by_id {
   my ( $species_id, $categories ) = @_;
@@ -103,23 +141,8 @@ for my $id ( sort keys %$id_name_map ) {
 }
 close($trna_output);
 
-#my $rrna_categories = {
-#  "Archaea"     => "Archaea",
-#  "Bacteria"    => "Bacteria",
-#  "Eukaryota"   => "Eukaryota",
-#  "Embryophyta" => "Embryophyta",
-#  "Fungi"       => "Fungi",
-#  "Vertebrata"  => "Vertebrata",
-#  "Viruses"     => "Viruses"
-#};
-#
-#open( my $rrna_output, ">$rrna_categoryDB" ) or die "Cannot write to $rrna_categoryDB";
-#for my $id ( sort keys %$id_name_map ) {
-#  my $species_name = $id_name_map->{$id};
-#  my $category = get_category_by_id( $id, $rrna_categories );
-#  print $rrna_output $species_name, "\t", $category, "\n";
-#}
-#close($rrna_output);
-
+`rm *.dmp; rm gc.prt; rm readme.txt;`;
 
 exit(1);
+
+

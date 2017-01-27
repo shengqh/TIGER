@@ -63,9 +63,6 @@ else {
 if ( !defined $outputFile ) {
   die "Output file required";
 }
-else {
-  die "Output file already exists: " . $outputFile if ( -e $outputFile );
-}
 
 sub GetTrnaKey {
   my $trna = shift;
@@ -91,18 +88,22 @@ sub GetTaxonomyKey {
 
 my $mydic = { "Ashbya gossypii" => "Eremothecium gossypii" };
 
+print "Reading taxonomy category file ...\n";
 my $taMap = readDictionaryByIndex( $categoryFile, 0, 1, 0 );
 my $taxoMap = {};
 for my $key ( keys %$taMap ) {
-  $taxoMap->{ lc($key) } = $taMap->{$key};
-  $taxoMap->{ GetTaxonomyKey($key) } = $taMap->{$key};
+  my $category = $taMap->{$key};
+  $taxoMap->{ lc($key) } = $category;
+  my $tkey = GetTaxonomyKey($key);
+  $taxoMap->{$tkey} = $category;
+  #print "$key\t$tkey\t$category\n";
 }
 
 my $trMap = readDictionaryByColumnName( $inputFile, "Id", "Species" );
 my $speciesMap = {};
 for my $key ( keys %$trMap ) {
   my $species = lc( ( exists $mydic->{$key} ) ? $mydic->{$key} : $key );
-  my @parts    = split( ' ', $species );
+  my @parts    = split( '_', $species );
   my $name1    = $parts[0];
   my $category = $taxoMap->{$name1};
   if ( !defined $category ) {
@@ -114,6 +115,8 @@ for my $key ( keys %$trMap ) {
   }
   if ( !defined $category ) {
     print STDERR "Cannot find category of " . $key . "\n";
+    die "$name1\t$species\n";
+    
     next;
   }
 

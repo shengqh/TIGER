@@ -19,7 +19,7 @@ if ( !-s $finalFile ) {
   if ( !-s "SILVA_128.fasta" ) {
     if ( !-s "SILVA_128_LSURef_tax_silva.fasta" ) {
       run_command('wget https://www.arb-silva.de/fileadmin/silva_databases/release_128/Exports/SILVA_128_LSURef_tax_silva.fasta.gz; gunzip SILVA_128_LSURef_tax_silva.fasta.gz;');
-    }
+    }  
 
     if ( !-s "SILVA_128_SSURef_Nr99_tax_silva.fasta" ) {
       run_command('wget https://www.arb-silva.de/fileadmin/silva_databases/release_128/Exports/SILVA_128_SSURef_Nr99_tax_silva.fasta.gz; gunzip SILVA_128_SSURef_Nr99_tax_silva.fasta.gz;');

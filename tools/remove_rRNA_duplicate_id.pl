@@ -77,6 +77,7 @@ while ( my $seq = $seqio->next_seq ) {
   my $desc = $seq->desc;
   if ( !exists $seqnames->{$id} ) {
     my $sequence = $seq->seq;
+    $sequence =~ s/U/T/g;
     my @taxinomies = split(';', $desc);
     my $species=$taxinomies[scalar(@taxinomies)-1];
     my $newid = $prefix . $id . "_" . $species;

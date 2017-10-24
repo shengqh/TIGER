@@ -21,7 +21,7 @@ The TIGER framework is developed using object oriented perl: (http://dev.perl.or
 
 ## python 2.7+
 
-A few software required the python environment, such as cutadapt. 
+A few softwares require the python environment, such as cutadapt. 
 
 ## mono 4+
 
@@ -39,7 +39,28 @@ make install
 ```
 
 ## R 3.2+
-A lot of statistical analysis and graph generation is based on R package. R 3.2+ is required to be installed in your system. (https://www.r-project.org/)
+A lot of statistical analysis and graph generation is based on R package. R 3.2+ is required to be installed in your system. (https://www.r-project.org/). Also, following libraries are required:
+
+```
+install.packages("RColorBrewer", repos='http://cran.us.r-project.org')
+install.packages("Rcpp", repos='http://cran.us.r-project.org')
+install.packages("VennDiagram", repos='http://cran.us.r-project.org')
+install.packages("colorRamps", repos='http://cran.us.r-project.org')
+install.packages("cowplot", repos='http://cran.us.r-project.org')
+install.packages("dplyr", repos='http://cran.us.r-project.org')
+install.packages("ggplot2", repos='http://cran.us.r-project.org')
+install.packages("grid", repos='http://cran.us.r-project.org')
+install.packages("heatmap3", repos='http://cran.us.r-project.org')
+install.packages("lattice", repos='http://cran.us.r-project.org')
+install.packages("plyr", repos='http://cran.us.r-project.org')
+install.packages("reshape", repos='http://cran.us.r-project.org')
+install.packages("reshape2", repos='http://cran.us.r-project.org')
+install.packages("scales", repos='http://cran.us.r-project.org')
+source("https://bioconductor.org/biocLite.R")
+biocLite("DESeq2")
+biocLite("edgeR")
+biocLite("preprocessCore")
+```
 
 ## Key software required by TIGER
 

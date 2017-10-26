@@ -17,16 +17,47 @@ Recent advances in high-throughput small RNA (sRNA) sequencing and the ever expa
 
 ## perl 5+
 
-The TIGER framework is developed using object oriented perl: (http://dev.perl.org/perl5/)
+The TIGER framework is developed using object oriented perl: (http://dev.perl.org/perl5/). Following perl packages are required:
+
+```
+curl -L http://cpanmin.us | perl - File::Basename;
+curl -L http://cpanmin.us | perl - Getopt::Long;
+curl -L http://cpanmin.us | perl - Bio::SeqIO;
+```
+
+I use following code to let perl install the packages into my own folder /home/shengq2/perl5
+
+```
+export PERL_MB_OPT="--install_base /home/shengq2/perl5"
+export PERL_MM_OPT="INSTALL_BASE=/home/shengq2/perl5"
+```
+
+Please remember to add the folder directory to perl path in your .bashrc file.
+```
+export PERL5LIB=/home/shengq2/perl5/lib/perl5:$PERL5LIB
+```
 
 ## python 2.7+
 
-A few softwares require the python environment, such as cutadapt. 
+A few softwares require the python environment, such as cutadapt. Following python packages are also required:
+
+```
+pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" operator
+pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" Bio.Seq
+pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" pysam
+pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" xml.etree.ElementTree
+```
+
+Here, I install the packages into my own python library folder "/scratch/cqs/shengq2/pythonlib", please replace it with your own folder. Also, remember to add the folder directory to python path in your .bashrc file.
+```
+export PYTHONPATH=/scratch/cqs/shengq2/pythonlib/lib/python2.7/site-packages:$PYTHONPATH
+export PATH=/scratch/cqs/shengq2/pythonlib/bin:$PATH
+```
 
 ## mono 4+
 
 Although one essential software cqstools in TIGER is developed by C#, it is majorly executed under linux through [mono] (https://github.com/mono/mono). So mono on your linux system is required for cqstools.
-For people who doesn't have root permission to install mono, you may install mono into your own directory and add the bin directory of that installed directory into your path enviroment:
+For people who doesn't have root permission to install mono, you may install mono into your own directory (mine is /scratch/cqs/shengq1/mono4):
 ```
 wget https://github.com/mono/mono/archive/mono-4.4.0.40.tar.gz
 tar -xzvf mono-4.4.0.40.tar.gz
@@ -36,6 +67,11 @@ cd mono-mono-4.4.0.40
 make get-monolite-latest
 make EXTERNAL_MCS=${PWD}/mcs/class/lib/monolite/basic.exe
 make install
+```
+
+Remember to add the bin directory of that installed directory into your path enviroment:
+```
+export PATH=/scratch/cqs/shengq1/mono4/bin:$PATH
 ```
 
 ## R 3.2+
@@ -85,7 +121,7 @@ pip install cutadapt
 ```
 elsewise, you need to install by following command and add the corresponding folder to your python path.
 ```
-pip install cutadapt --user
+pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" cutadapt
 ```
 
 ### bowtie (http://bowtie-bio.sourceforge.net/index.shtml)

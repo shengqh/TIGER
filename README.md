@@ -32,14 +32,32 @@ export PERL_MB_OPT="--install_base /home/shengq2/perl5"
 export PERL_MM_OPT="INSTALL_BASE=/home/shengq2/perl5"
 ```
 
-Please remember to add the folder directory to perl path in your .bashrc file.
+You also need to install ngsperl package from github server. I will install it to my folder /scratch/cqs/shengq2/packages
+
 ```
-export PERL5LIB=/home/shengq2/perl5/lib/perl5:$PERL5LIB
+cd /scratch/cqs/shengq2/packages
+git clone https://github.com/shengqh/ngsperl.git
+
+```
+
+Please remember to add the folder directories to perl path in your .bashrc file.
+```
+export PERL5LIB=/scratch/cqs/shengq2/packages/ngsperl/lib:/home/shengq2/perl5/lib/perl5:$PERL5LIB
 ```
 
 ## python 2.7+
 
-A few softwares require the python environment, such as cutadapt. Following python packages are also required:
+A few softwares require the python environment, such as cutadapt. You may install the packages to default folder:
+
+```
+pip install operator
+pip install Bio.Seq
+pip install pysam
+pip install xml.etree.ElementTree
+pip install cutadapt
+```
+
+Or you can install packages into your own folder if you don't have root permission. Here, I install the packages into my own python library folder "/scratch/cqs/shengq2/pythonlib", please replace it with your own folder.
 
 ```
 pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" operator
@@ -48,7 +66,8 @@ pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" pysam
 pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" xml.etree.ElementTree
 ```
 
-Here, I install the packages into my own python library folder "/scratch/cqs/shengq2/pythonlib", please replace it with your own folder. Also, remember to add the folder directory to python path in your .bashrc file.
+Also, remember to add the folder directory to python path in your .bashrc file.
+
 ```
 export PYTHONPATH=/scratch/cqs/shengq2/pythonlib/lib/python2.7/site-packages:$PYTHONPATH
 export PATH=/scratch/cqs/shengq2/pythonlib/bin:$PATH
@@ -57,24 +76,27 @@ export PATH=/scratch/cqs/shengq2/pythonlib/bin:$PATH
 ## mono 4+
 
 Although one essential software cqstools in TIGER is developed by C#, it is majorly executed under linux through [mono] (https://github.com/mono/mono). So mono on your linux system is required for cqstools.
-For people who doesn't have root permission to install mono, you may install mono into your own directory (mine is /scratch/cqs/shengq1/mono4):
+For people who doesn't have root permission to install mono, you may install mono into your own directory (mine is /scratch/cqs/shengq2/mono4):
+
 ```
 wget https://github.com/mono/mono/archive/mono-4.4.0.40.tar.gz
 tar -xzvf mono-4.4.0.40.tar.gz
 cd mono-mono-4.4.0.40
-#here, I will install mono to my own directory /scratch/cqs/shengq1/mono4, change it to your directory
-./autogen.sh --prefix=/scratch/cqs/shengq1/mono4 --with-large-heap=yes --with-ikvm-native=no --disable-shared-memory --enable-big-arrays
+#here, I will install mono to my own directory /scratch/cqs/shengq2/mono4, change it to your directory
+./autogen.sh --prefix=/scratch/cqs/shengq2/mono4 --with-large-heap=yes --with-ikvm-native=no --disable-shared-memory --enable-big-arrays
 make get-monolite-latest
 make EXTERNAL_MCS=${PWD}/mcs/class/lib/monolite/basic.exe
 make install
 ```
 
 Remember to add the bin directory of that installed directory into your path enviroment:
+
 ```
-export PATH=/scratch/cqs/shengq1/mono4/bin:$PATH
+export PATH=/scratch/cqs/shengq2/mono4/bin:$PATH
 ```
 
 ## R 3.2+
+
 A lot of statistical analysis and graph generation is based on R package. R 3.2+ is required to be installed in your system. (https://www.r-project.org/). Also, following libraries are required:
 
 ```
@@ -103,6 +125,7 @@ biocLite("preprocessCore")
 ### fastqc (http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 
 fastqc will be used to do quality control at raw read level. It can provide sufficient information for adapter trimming.You can install it as following. Remember to add the FastQC folder to your path.
+
 ```
 VER=0.11.5
 wget fastqc_v${VER}.zip http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v${VER}.zip
@@ -115,11 +138,14 @@ fi
 
 ### cutadapt (https://cutadapt.readthedocs.io/en/stable/)
 
-cutadapt will be used for adapter trimming. If you have root permission, you can simple install cutadapt by:
+cutadapt will be used for adapter trimming. You can install cutadapt by:
+
 ```
 pip install cutadapt
 ```
-elsewise, you need to install by following command and add the corresponding folder to your python path.
+
+or
+
 ```
 pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" cutadapt
 ```
@@ -127,9 +153,10 @@ pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" cutadapt
 ### bowtie (http://bowtie-bio.sourceforge.net/index.shtml)
 
 bowtie will be used to map read to host genome, non-host library and non-host genome. Following commands install bowtie into folder $TARGET_BIN ($TARGET_BIN should be in your path):
+
 ```
 VER=0.12.9
-TARGET_BIN=${HOME}/local/bin
+TARGET_BIN=/scratch/cqs/shengq2/local/bin
 wget http://sourceforge.net/projects/bowtie-bio/files/bowtie/${VER}/bowtie-${VER}-src.zip
 unzip bowtie-${VER}-src.zip
 if [ -s bowtie-${VER} ]; then
@@ -145,9 +172,10 @@ fi
 
 ### cqstools (https://github.com/shengqh/CQS.Tools)
 
-cqstools will be used in preprocessing the reads, counting mapping result and summerizing table. You can install it as following. Remember to add the cqstools folder to your path.
+cqstools will be used in preprocessing the reads, counting mapping result and summerizing table. You can install it as following. You will use absolute path of cqstools.exe in your configuration file.
+
 ```
-VER=1.7.1
+VER=1.7.5
 wget https://github.com/shengqh/CQS.Tools/releases/download/v${VER}/cqstools.${VER}.zip
 unzip cqstools.${VER}.zip
 if [ -s cqstools.${VER} ]; then
@@ -163,6 +191,7 @@ fi
 ### samtools (https://github.com/samtools/samtools)
 
 samtools is widely used in next generation sequencing analysis. You can install it as following.
+
 ```
 VER=1.3.1
 TARGET_BIN=${HOME}/local/bin
@@ -176,16 +205,15 @@ if [ -s samtools-${VER} ]; then
   make install
 fi
 ```
-### ngsperl (https://github.com/shengqh/ngsperl)
 
-ngsperl can be installed from github server. Make sure to add ngsperl to your perl library path.
-```
-git clone https://github.com/shengqh/ngsperl.git
-```
 <a name="Installation"/>
+
 #Installation
+
 ##software
+
 TIGER and required R packages can be installed from github server.
+
 ```
 git clone https://github.com/shengqh/TIGER.git
 cd TIGER

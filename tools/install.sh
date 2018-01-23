@@ -238,7 +238,7 @@ fi
 
 ################ R ###################
 echo "Installing R packages to default library ..."
-R CMD BATCH ${BASEDIR}/install_packages.r > install_packages.r.Rout
+R CMD BATCH ${BASEDIR}/install_packages.R > install_packages.r.Rout
 check=`grep "is not writable" install_packages.r.Rout`;
 if [ $? = "0" ]; then
     PREFIX_R_LIBS="${CURDIR}/R_libs"
@@ -251,7 +251,7 @@ if [ $? = "0" ]; then
     export R_LIBS=${PREFIX_R_LIBS}
     echo "export R_LIBS=${PREFIX_R_LIBS}" >> add_to.bashrc
     echo "Installing R packages to $PREFIX_R_LIBS ..."
-    R CMD BATCH ${BASEDIR}/install_packages.r > install_packages.r.Rout
+    R CMD BATCH ${BASEDIR}/install_packages.R > install_packages.r.Rout
 fi
 check=`grep proc.time install_packages.r.Rout`;
 if [ $? = "0" ]; then
@@ -260,7 +260,12 @@ else
     echo -e "$RED""R/BioConductor packages NOT installed successfully. Look at the install_packages.r.Rout for additional informations""$NORMAL"; exit 1;
 fi
 
- ###################
+##################
+echo "Installing PYTHON packages ..."
+pip install 
+
+
+##################
 echo "Installing ngsperl package ..."
 git clone https://github.com/shengqh/ngsperl.git
 

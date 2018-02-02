@@ -75,7 +75,7 @@ my $def = {
 
   #non-host library
   'search_nonhost_library' => 1,
-  'bowtie1_miRBase_index'  => '/scratch/cqs/shengq2/references/miRBase21/bowtie_index_1.1.1/mature.dna',
+  'bowtie1_miRBase_index'  => '$smallrna_db/mature.dna',
   'mirbase_count_option'   => '-p mmu',
   'bowtie1_tRNA_index'     => "$smallrna_db/GtRNAdb2.20161214.mature",
   'trna_category_map'      => "$smallrna_db/GtRNAdb2.20161214.category.map",

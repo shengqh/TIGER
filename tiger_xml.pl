@@ -16,7 +16,7 @@ my $usage = "
 
 Synopsis:
 
-perl tiger.pl -g genome -p project_file --create
+perl tiger_xml.pl -g genome -p project_file --create
 
 Options:
   --create                Create default project configuration file

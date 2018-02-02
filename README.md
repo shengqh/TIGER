@@ -3,13 +3,13 @@ TIGER: Tools for Intensive Genome alignment of Extracellular small RNA
 * [Introduction](#Introduction)
 * [Prerequisites](#Prerequisites)
 * [Installation](#Installation)
-* [Changes](#changes)
+* [Example](#Example)
 
 <a name="Introduction"/>
 
 # Introduction
 
-Recent advances in high-throughput small RNA (sRNA) sequencing and the ever expanding transcriptome have opened incredible opportunities to better understand sRNA gene regulation and the biological roles of extracellular sRNAs. Although the field of extracellular RNA is rapidly emerging, there is a great need for better informatics tools to analyze sRNA sequencing (sRNAseq) datasets. Extracellular small RNAs (sRNA) are transported in circulation by lipoproteins, namely low-density lipoproteins (LDL) and high-density lipoproteins (HDL). These sRNAs include microRNAs (miRNA), tRNA-derived sRNAs (tDR), sRNAs-derived from small nuclear RNAs (sndRNA), sRNAs-derived ribosomal RNAs (rDR) and many other classes. To fully characterize lipoprotein sRNA transport and define their link to hepatic and biliary sRNA signatures, high-throughput sRNAseq was used to profile the entire sRNA transcriptome of in apolipoprotein B-containing lipoproteins (apoB), HDL, bile, and liver. To analyze these large lipoprotein datasets, improvements to existing data analysis pipelines were required. To address these analysis issues, we developed a novel sRNAseq data analysis pipeline optimized for extracellular sRNA entitled, “Tools for Intensive Genome alignment of Extracellular small RNA (TIGER).” This pipeline has several advantages over existing data analysis pipelines, including microRNA variant analyses, non-host genome alignments for microbiome and soil bacteria, data visualization packages and quantitative tools for tRNA-derived sRNAs (tDR), and optimization for lipoprotein extracellular sRNAs. Using TIGER, we were able to make critical discoveries in lipoprotein and biliary sRNA changes that would not be quantified by existing pipelines.
+Recent advances in high-throughput small RNA (sRNA) sequencing and the ever expanding transcriptome have opened incredible opportunities to better understand sRNA gene regulation and the biological roles of extracellular sRNAs. Although the field of extracellular RNA is rapidly emerging, there is a great need for better informatics tools to analyze sRNA sequencing (sRNAseq) datasets. Extracellular small RNAs (sRNA) are transported in circulation by lipoproteins, namely low-density lipoproteins (LDL) and high-density lipoproteins (HDL). These sRNAs include microRNAs (miRNA), tRNA-derived sRNAs (tDR), sRNAs-derived from small nuclear RNAs (sndRNA), sRNAs-derived ribosomal RNAs (rDR) and many other classes. To fully characterize lipoprotein sRNA transport and define their link to hepatic and biliary sRNA signatures, high-throughput sRNAseq was used to profile the entire sRNA transcriptome of in apolipoprotein B-containing lipoproteins (apoB), HDL, bile, and liver. To analyze these large lipoprotein datasets, improvements to existing data analysis pipelines were required. To address these analysis issues, we developed a novel sRNAseq data analysis pipeline optimized for extracellular sRNA entitled, â€œTools for Intensive Genome alignment of Extracellular small RNA (TIGER).â€� This pipeline has several advantages over existing data analysis pipelines, including microRNA variant analyses, non-host genome alignments for microbiome and soil bacteria, data visualization packages and quantitative tools for tRNA-derived sRNAs (tDR), and optimization for lipoprotein extracellular sRNAs. Using TIGER, we were able to make critical discoveries in lipoprotein and biliary sRNA changes that would not be quantified by existing pipelines.
 
 <a name="Prerequisites"/>
 
@@ -222,16 +222,55 @@ R CMD BATCH install_packages.r
 
 ## database
 
-### host genome
+You can download the required databases:
 
-gencode hg19 genome database is recommended.
+```
+mkdir bowtie_index
+cd bowtie_index
 
-### non host library
+wget https://cqsweb.app.vumc.org/download1/bowtie_index/GtRNAdb2.tar.gz
+tar -xzvf GtRNAdb2.tar.gz
+wget https://cqsweb.app.vumc.org/download1/bowtie_index/SILVA_128.tar.gz
+tar -xzvf SILVA_128.tar.gz
+wget https://cqsweb.app.vumc.org/download1/bowtie_index/group1.tar.gz
+tar -xzvf group1.tar.gz
+wget https://cqsweb.app.vumc.org/download1/bowtie_index/group2.tar.gz
+tar -xzvf group2.tar.gz
+wget https://cqsweb.app.vumc.org/download1/bowtie_index/group4.tar.gz
+tar -xzvf group4.tar.gz
+wget https://cqsweb.app.vumc.org/download1/bowtie_index/hg19.tar.gz
+tar -xzvf hg19.tar.gz
+wget https://cqsweb.app.vumc.org/download1/bowtie_index/hg38.tar.gz
+tar -xzvf hg38.tar.gz
+wget https://cqsweb.app.vumc.org/download1/bowtie_index/mm10.tar.gz
+tar -xzvf mm10.tar.gz
+wget https://cqsweb.app.vumc.org/download1/bowtie_index/rn5.tar.gz
+tar -xzvf rn5.tar.gz
+rm *.tar.gz
 
-miRBase for microRNA 
+cd ..
+mkdir annotation
+cd annotation
 
-GtRNAdb2 from UCSC for tRNA
+wget https://cqsweb.app.vumc.org/download1/annotation/hg19_miRBase21_GtRNAdb2_gencode19_ncbi.bed
+wget https://cqsweb.app.vumc.org/download1/annotation/hg19_miRBase21_GtRNAdb2_gencode19_ncbi.bed.fa
+wget https://cqsweb.app.vumc.org/download1/annotation/hg19_miRBase21_GtRNAdb2_gencode19_ncbi.bed.info
 
-rRNA database
+wget https://cqsweb.app.vumc.org/download1/annotation/hg38_miRBase21_GtRNAdb2_gencode25_ncbi.bed
+wget https://cqsweb.app.vumc.org/download1/annotation/hg38_miRBase21_GtRNAdb2_gencode25_ncbi.bed.fa
+wget https://cqsweb.app.vumc.org/download1/annotation/hg38_miRBase21_GtRNAdb2_gencode25_ncbi.bed.info
 
-### non host genome
+wget https://cqsweb.app.vumc.org/download1/annotation/mm10_miRBase21_GtRNAdb2_gencode12_ncbi.bed
+wget https://cqsweb.app.vumc.org/download1/annotation/mm10_miRBase21_GtRNAdb2_gencode12_ncbi.bed.fa
+wget https://cqsweb.app.vumc.org/download1/annotation/mm10_miRBase21_GtRNAdb2_gencode12_ncbi.bed.info
+
+wget https://cqsweb.app.vumc.org/download1/annotation/rn5_miRBase21_GtRNAdb2_ensembl79_ncbi.bed
+wget https://cqsweb.app.vumc.org/download1/annotation/rn5_miRBase21_GtRNAdb2_ensembl79_ncbi.bed.fa
+wget https://cqsweb.app.vumc.org/download1/annotation/rn5_miRBase21_GtRNAdb2_ensembl79_ncbi.bed.info
+```
+
+<a name="Example"/>
+
+# Example
+
+There is an example called "tiger.pl" in the folder. When you have a new project, you may copy this template file to your project folder and modify it.

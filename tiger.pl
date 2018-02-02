@@ -7,57 +7,86 @@ use Pipeline::SmallRNA;
 use Pipeline::SmallRNAUtils;
 use CQS::ClassFactory;
 
+my $smallrna_db="/workspace/shengq2/smallrna_db/bowtie_index";
+
 my $def = {
+  #task_name of the project. Don't contain space in the name which may cause problem.
   'task_name'  => '3018-KCV_76_mouse',
-  'constraint' => 'haswell',
+  
+  #cluster manager, either slurm or Torque
   'cluster'    => 'slurm',
+  
+  #node constraint of slurm
+  #'constraint' => 'haswell',
+  
+  #target folder to save the result. Don't contain space in the name which may cause problem.
   'target_dir' => '/scratch/cqs/shengq2/temp/20171219_smallRNA_3018-KCV_76_mouse_v3',
+  
+  #email for cluster notification
   'email'      => 'quanhu.sheng.1@vanderbilt.edu',
+  
+  #absolute cqstools location
   'cqstools'   => '/home/shengq2/cqstools/cqstools.exe',
 
   #preprocessing
+  
+  #remove terminal 'N' in fastq reads
   'fastq_remove_N'      => 1,
+  
+  #remove contanination sequences before adapter trimming
   'remove_sequences'    => '\'CCACGTTCCCGTGG;ACAGTCCGACGATC\'',
+  
+  #trimming reads or not
   'perform_cutadapt'    => 1,
-  'adapter'             => 'TGGAATTCTCGGGTGCCAAGG',
+  
+  #remove random bases before adapter trimming (NextFlex), set to 0 if no bases need to be removed (TruSeq).
   'fastq_remove_random' => 4,
+  
+  #trimming adapter
+  'adapter'             => 'TGGAATTCTCGGGTGCCAAGG',
+  
+  #consider nontemplated nucleotide addition (NTA) of tRNA
   'consider_tRNA_NTA'   => 1,
+  
+  #consider nontemplated nucleotide addition (NTA) of miRNA
   'consider_miRNA_NTA'  => 1,
+  
+  #minimum read length after adapter trimming
   'min_read_length'     => 16,
 
   #host genome
   'search_host_genome'   => 1,
   'search_not_identical' => 1,
-  'bowtie1_index'        => '/scratch/cqs/shengq2/references/smallrna/v3/bowtie_index_1.1.2/mm10_miRBase21_GtRNAdb2_gencode12_ncbi',
-  'coordinate'           => '/scratch/cqs/shengq2/references/smallrna/v3/mm10_miRBase21_GtRNAdb2_gencode12_ncbi.bed',
-  'coordinate_fasta'     => '/scratch/cqs/shengq2/references/smallrna/v3/mm10_miRBase21_GtRNAdb2_gencode12_ncbi.bed.fa',
+  'bowtie1_index'        => "$smallrna_db/mm10_miRBase21_GtRNAdb2_gencode12_ncbi",
+  'coordinate'           => "$smallrna_db/mm10_miRBase21_GtRNAdb2_gencode12_ncbi.bed",
+  'coordinate_fasta'     => "$smallrna_db/mm10_miRBase21_GtRNAdb2_gencode12_ncbi.bed.fa",
   'hasSnoRNA'            => 1,
   'hasYRNA'              => 0,
   'hasSnRNA'             => 1,
 
   #non-host genome
   'search_nonhost_genome'         => 1,
-  'bowtie1_bacteria_group1_index' => '/scratch/cqs/zhaos/vickers/reference/bacteria/group1/bowtie_index_1.1.2/bacteriaDatabaseGroup1',
-  'bacteria_group1_species_map'   => '/scratch/cqs/zhaos/vickers/reference/bacteria/group1/20170206_Group1SpeciesAll.species.map',
-  'bowtie1_bacteria_group2_index' => '/scratch/cqs/zhaos/vickers/reference/bacteria/group2/bowtie_index_1.1.2/bacteriaDatabaseGroup2',
-  'bacteria_group2_species_map'   => '/scratch/cqs/zhaos/vickers/reference/bacteria/group2/20160907_Group2SpeciesAll.species.map',
-  'bowtie1_fungus_group4_index'   => '/scratch/cqs/zhaos/vickers/reference/bacteria/group4/bowtie_index_1.1.2/group4',
-  'fungus_group4_species_map'     => '/scratch/cqs/zhaos/vickers/reference/bacteria/group4/20160225_Group4SpeciesAll.species.map',
+  'bowtie1_bacteria_group1_index' => "$smallrna_db/20170206_Group1SpeciesAll",
+  'bacteria_group1_species_map'   => "$smallrna_db/20170206_Group1SpeciesAll.species.map",
+  'bowtie1_bacteria_group2_index' => "$smallrna_db/20160907_Group2SpeciesAll",
+  'bacteria_group2_species_map'   => "$smallrna_db/20160907_Group2SpeciesAll.species.map",
+  'bowtie1_fungus_group4_index'   => "$smallrna_db/20160225_Group4SpeciesAll",
+  'fungus_group4_species_map'     => "$smallrna_db/20160225_Group4SpeciesAll.species.map",
 
   #non-host library
   'search_nonhost_library' => 1,
   'bowtie1_miRBase_index'  => '/scratch/cqs/shengq2/references/miRBase21/bowtie_index_1.1.1/mature.dna',
   'mirbase_count_option'   => '-p mmu',
-  'bowtie1_tRNA_index'     => '/scratch/cqs/shengq2/references/smallrna/v3/GtRNAdb2/bowtie_index_1.1.2/GtRNAdb2.20161214.mature',
-  'trna_category_map'      => '/scratch/cqs/shengq2/references/smallrna/v3/GtRNAdb2/GtRNAdb2.20161214.category.map',
-  'trna_map'               => '/scratch/cqs/shengq2/references/smallrna/v3/GtRNAdb2/GtRNAdb2.20161214.map',
-  'bowtie1_rRNA_index'     => '/scratch/cqs/shengq2/references/smallrna/v3/SILVA/bowtie_index_1.1.2/SILVA_128.rmdup',
-  'rrna_category_map'      => '/scratch/cqs/shengq2/references/smallrna/v3/SILVA/SILVA_128.rmdup.category.map',
+  'bowtie1_tRNA_index'     => "$smallrna_db/GtRNAdb2.20161214.mature",
+  'trna_category_map'      => "$smallrna_db/GtRNAdb2.20161214.category.map",
+  'trna_map'               => "$smallrna_db/GtRNAdb2.20161214.map",
+  'bowtie1_rRNA_index'     => "$smallrna_db/SILVA_128.rmdup",
+  'rrna_category_map'      => "$smallrna_db/SILVA_128.rmdup.category.map",
 
   #blast
-  'blast_top_reads'      => 1,
+  'blast_top_reads'      => 0,
   'blast_localdb'        => '/scratch/cqs/shengq2/references/blastdb',
-  'blast_unmapped_reads' => 1,
+  'blast_unmapped_reads' => 0,
 
   #differential expression
   'DE_pvalue'                   => '0.05',

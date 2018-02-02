@@ -202,7 +202,8 @@ You can download the required [databases](download_tigerdb.sh):
 ```
 mkdir bowtie_index
 cd bowtie_index
-
+wget https://cqsweb.app.vumc.org/download1/bowtie_index/mirBase21.tar.gz
+tar -xzvf mirBase21.tar.gz
 wget https://cqsweb.app.vumc.org/download1/bowtie_index/GtRNAdb2.tar.gz
 tar -xzvf GtRNAdb2.tar.gz
 wget https://cqsweb.app.vumc.org/download1/bowtie_index/SILVA_128.tar.gz

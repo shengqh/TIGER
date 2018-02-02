@@ -52,10 +52,8 @@ export PERL5LIB=/home/shengq2/program/ngsperl/lib:/home/shengq2/perl5/lib/perl5:
 A few softwares require the python environment, such as cutadapt. You may install the required python packages/softwares to default folder:
 
 ```
-pip install operator
-pip install Bio.Seq
+pip install biopython
 pip install pysam
-pip install xml.etree.ElementTree
 pip install cutadapt
 ```
 

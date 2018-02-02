@@ -26,7 +26,7 @@ export PERL_MB_OPT="--install_base /home/shengq2/perl5"
 export PERL_MM_OPT="INSTALL_BASE=/home/shengq2/perl5"
 ```
 
-The following perl packages are required:
+The following perl packages are required: [install_perllib.sh](install_perllib.sh)
 
 ```
 curl -L http://cpanmin.us | perl - File::Basename;
@@ -57,7 +57,7 @@ pip install pysam
 pip install cutadapt
 ```
 
-Or you can install them into your own folder if you don't have root permission. Here, I install the packages into my own python library folder "/scratch/cqs/shengq2/pythonlib", please replace it with your own folder.
+Or you can install them into your own folder if you don't have root permission. Here, I install the packages into my own python library folder "/scratch/cqs/shengq2/pythonlib", please replace it with your own folder.[install_pythonlib.sh](install_pythonlib.sh)
 
 ```
 PYTHONLIB="/home/shengq2/python2"
@@ -252,7 +252,9 @@ There is an example called [tiger.pl](tiger.pl) in the folder. Update the cqstoo
 ```
 perl tiger.pl
 ```
-
+Once you generate the folder and scripts, go to the sequencetask/pbs folder. There are two choices you can run the project:
+* Run the \_pipeline_st.pbs which will run all tasks in pipeline sequentially. 
+* Run the step_1_st.sh to submit the individual file level tasks to cluster. Those individual tasks are usually time cost. Once all tasks are done, you can run \_pipeline_st.pbs to run all other tasks sequentially.
 
 
 

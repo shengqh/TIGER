@@ -7,7 +7,7 @@ use Pipeline::SmallRNA;
 use Pipeline::SmallRNAUtils;
 use CQS::ClassFactory;
 
-my $smallrna_db="/workspace/shengq2/smallrna_db/bowtie_index";
+my $smallrna_db="/workspace/shengq2/smallrna_db";
 
 my $def = {
   #task_name of the project. Don't contain space in the name which may cause problem.

@@ -1,4 +1,3 @@
-cd /workspace/shengq2/temp
 
 mkdir bowtie_index
 cd bowtie_index

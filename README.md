@@ -187,9 +187,9 @@ fi
 
 <a name="Installation"/>
 
-#Installation
+# Installation
 
-##software
+## Software
 
 TIGER can be downloaded from github server.
 
@@ -250,4 +250,12 @@ wget https://cqsweb.app.vumc.org/download1/annotation/rn5_miRBase21_GtRNAdb2_ens
 
 # Example
 
-There is an example called [tiger.pl](tiger.pl) in the folder. When you have a new project, you may copy this template file to your project folder and modify it.
+There is an example called [tiger.pl](tiger.pl) in the folder. Update the cqstools link and database locations in the file. When you have a new project, you may copy this template file to your project folder and modify the files, groups and pairs definition. Then you need to run following command to generate the folders and scripts.
+```
+perl tiger.pl
+```
+
+
+
+
+

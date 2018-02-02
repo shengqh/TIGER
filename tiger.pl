@@ -20,7 +20,7 @@ my $def = {
   #'constraint' => 'haswell',
   
   #target folder to save the result. Don't contain space in the name which may cause problem.
-  'target_dir' => '/scratch/cqs/shengq2/temp/20171219_smallRNA_3018-KCV_76_mouse_v3',
+  'target_dir' => '/workspace/shengq2/20171219_smallRNA_3018-KCV_76_mouse_v3',
   
   #email for cluster notification
   'email'      => 'quanhu.sheng.1@vanderbilt.edu',

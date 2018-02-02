@@ -9,7 +9,7 @@ TIGER: Tools for Intensive Genome alignment of Extracellular small RNA
 
 # Introduction
 
-Recent advances in high-throughput small RNA (sRNA) sequencing and the ever expanding transcriptome have opened incredible opportunities to better understand sRNA gene regulation and the biological roles of extracellular sRNAs. Although the field of extracellular RNA is rapidly emerging, there is a great need for better informatics tools to analyze sRNA sequencing (sRNAseq) datasets. Extracellular small RNAs (sRNA) are transported in circulation by lipoproteins, namely low-density lipoproteins (LDL) and high-density lipoproteins (HDL). These sRNAs include microRNAs (miRNA), tRNA-derived sRNAs (tDR), sRNAs-derived from small nuclear RNAs (sndRNA), sRNAs-derived ribosomal RNAs (rDR) and many other classes. To fully characterize lipoprotein sRNA transport and define their link to hepatic and biliary sRNA signatures, high-throughput sRNAseq was used to profile the entire sRNA transcriptome of in apolipoprotein B-containing lipoproteins (apoB), HDL, bile, and liver. To analyze these large lipoprotein datasets, improvements to existing data analysis pipelines were required. To address these analysis issues, we developed a novel sRNAseq data analysis pipeline optimized for extracellular sRNA entitled, â€œTools for Intensive Genome alignment of Extracellular small RNA (TIGER).â€� This pipeline has several advantages over existing data analysis pipelines, including microRNA variant analyses, non-host genome alignments for microbiome and soil bacteria, data visualization packages and quantitative tools for tRNA-derived sRNAs (tDR), and optimization for lipoprotein extracellular sRNAs. Using TIGER, we were able to make critical discoveries in lipoprotein and biliary sRNA changes that would not be quantified by existing pipelines.
+Recent advances in high-throughput small RNA (sRNA) sequencing and the ever expanding transcriptome have opened incredible opportunities to better understand sRNA gene regulation and the biological roles of extracellular sRNAs. Although the field of extracellular RNA is rapidly emerging, there is a great need for better informatics tools to analyze sRNA sequencing (sRNAseq) datasets. Extracellular small RNAs (sRNA) are transported in circulation by lipoproteins, namely low-density lipoproteins (LDL) and high-density lipoproteins (HDL). These sRNAs include microRNAs (miRNA), tRNA-derived sRNAs (tDR), sRNAs-derived from small nuclear RNAs (sndRNA), sRNAs-derived ribosomal RNAs (rDR) and many other classes. To fully characterize lipoprotein sRNA transport and define their link to hepatic and biliary sRNA signatures, high-throughput sRNAseq was used to profile the entire sRNA transcriptome of in apolipoprotein B-containing lipoproteins (apoB), HDL, bile, and liver. To analyze these large lipoprotein datasets, improvements to existing data analysis pipelines were required. To address these analysis issues, we developed a novel sRNAseq data analysis pipeline optimized for extracellular sRNA entitled, "Tools for Intensive Genome alignment of Extracellular small RNA (TIGER)". This pipeline has several advantages over existing data analysis pipelines, including microRNA variant analyses, non-host genome alignments for microbiome and soil bacteria, data visualization packages and quantitative tools for tRNA-derived sRNAs (tDR), and optimization for lipoprotein extracellular sRNAs. Using TIGER, we were able to make critical discoveries in lipoprotein and biliary sRNA changes that would not be quantified by existing pipelines.
 
 <a name="Prerequisites"/>
 
@@ -17,7 +17,16 @@ Recent advances in high-throughput small RNA (sRNA) sequencing and the ever expa
 
 ## perl 5+
 
-The TIGER framework is developed using object oriented perl: (http://dev.perl.org/perl5/). Following perl packages are required:
+The TIGER framework is developed using object oriented perl: (http://dev.perl.org/perl5/). 
+
+I added following code into my .bashrc to let perl install the packages into my own folder /home/shengq2/perl5
+
+```
+export PERL_MB_OPT="--install_base /home/shengq2/perl5"
+export PERL_MM_OPT="INSTALL_BASE=/home/shengq2/perl5"
+```
+
+The following perl packages are required:
 
 ```
 curl -L http://cpanmin.us | perl - File::Basename;
@@ -25,24 +34,17 @@ curl -L http://cpanmin.us | perl - Getopt::Long;
 curl -L http://cpanmin.us | perl - Bio::SeqIO;
 ```
 
-I use following code to let perl install the packages into my own folder /home/shengq2/perl5
+You also need to install ngsperl package from github server. I installed it into my folder /home/shengq2/program
 
 ```
-export PERL_MB_OPT="--install_base /home/shengq2/perl5"
-export PERL_MM_OPT="INSTALL_BASE=/home/shengq2/perl5"
-```
-
-You also need to install ngsperl package from github server. I will install it to my folder /scratch/cqs/shengq2/packages
-
-```
-cd /scratch/cqs/shengq2/packages
+cd /home/shengq2/program
 git clone https://github.com/shengqh/ngsperl.git
 
 ```
 
-Please remember to add the folder directories to perl path in your .bashrc file, for example
+Please remember to add the folders to perl path in your .bashrc file, for example
 ```
-export PERL5LIB=/scratch/cqs/shengq2/packages/ngsperl/lib:/home/shengq2/perl5/lib/perl5:$PERL5LIB
+export PERL5LIB=/home/shengq2/program/ngsperl/lib:/home/shengq2/perl5/lib/perl5:$PERL5LIB
 ```
 
 ## python 2.7+
@@ -60,31 +62,29 @@ pip install cutadapt
 Or you can install them into your own folder if you don't have root permission. Here, I install the packages into my own python library folder "/scratch/cqs/shengq2/pythonlib", please replace it with your own folder.
 
 ```
-pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" operator
-pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" Bio.Seq
-pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" pysam
-pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" xml.etree.ElementTree
-pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" cutadapt
+PYTHONLIB="/home/shengq2/python2"
+pip install --install-option="--prefix=${PYTHONLIB}" biopython
+pip install --install-option="--prefix=${PYTHONLIB}" pysam
+pip install --install-option="--prefix=${PYTHONLIB}" cutadapt
 ```
 
 If you installed the packages/softwares into your own folder, please remember to add the folder directory to python path in your .bashrc file.
 
 ```
-export PYTHONPATH=/scratch/cqs/shengq2/pythonlib/lib/python2.7/site-packages:$PYTHONPATH
-export PATH=/scratch/cqs/shengq2/pythonlib/bin:$PATH
+export PYTHONPATH=/home/shengq2/python2/lib/python2.7/site-packages:$PYTHONPATH
+export PATH=/home/shengq2/python2/bin:$PATH
 ```
 
 ## mono 4+
 
 Although one essential software cqstools in TIGER is developed by C#, it is majorly executed under linux through [mono] (https://github.com/mono/mono). So mono on your linux system is required for cqstools.
-For people who doesn't have root permission to install mono, you may install mono into your own directory (mine is /scratch/cqs/shengq2/mono4):
+For people who doesn't have root permission to install mono, you may install mono into your own directory (mine is /home/shengq2/mono5):
 
 ```
-wget https://github.com/mono/mono/archive/mono-4.4.0.40.tar.gz
-tar -xzvf mono-4.4.0.40.tar.gz
-cd mono-mono-4.4.0.40
-#here, I will install mono to my own directory /scratch/cqs/shengq2/mono4, change it to your directory
-./autogen.sh --prefix=/scratch/cqs/shengq2/mono4 --with-large-heap=yes --with-ikvm-native=no --disable-shared-memory --enable-big-arrays
+MONO_HOME="/home/shengq2/mono5"
+git clone --recursive https://github.com/mono/mono.git
+cd mono
+./autogen.sh --prefix=${MONO_HOME} --with-large-heap=yes --with-ikvm-native=no --disable-shared-memory --enable-big-arrays
 make get-monolite-latest
 make EXTERNAL_MCS=${PWD}/mcs/class/lib/monolite/basic.exe
 make install
@@ -93,7 +93,7 @@ make install
 Remember to add the bin directory of that installed directory into your path enviroment:
 
 ```
-export PATH=/scratch/cqs/shengq2/mono4/bin:$PATH
+export PATH=/home/shengq2/mono5/bin:$PATH
 ```
 
 ## R 3.2+
@@ -128,11 +128,11 @@ biocLite("preprocessCore")
 fastqc will be used to do quality control at raw read level. It can provide sufficient information for adapter trimming.You can install it as following. Remember to add the FastQC folder to your path.
 
 ```
-VER=0.11.5
-wget fastqc_v${VER}.zip http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v${VER}.zip
-unzip fastqc_v${VER}.zip
+FASTQ_VER=0.11.7
+wget fastqc_v${FASTQ_VER}.zip http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v${FASTQ_VER}.zip
+unzip fastqc_v${FASTQ_VER}.zip
 if [ -s FastQC ]; then
-  rm fastqc_v${VER}.zip
+  rm fastqc_v${FASTQ_VER}.zip
   chmod 755 FastQC/fastqc
 fi
 ```

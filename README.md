@@ -75,10 +75,9 @@ export PYTHONPATH=/home/shengq2/python2/lib/python2.7/site-packages:$PYTHONPATH
 export PATH=/home/shengq2/python2/bin:$PATH
 ```
 
-## mono 4+
+## mono 5+
 
-Although one essential software cqstools in TIGER is developed by C#, it is majorly executed under linux through [mono] (https://github.com/mono/mono). So mono on your linux system is required for cqstools.
-For people who doesn't have root permission to install mono, you may install mono into your own directory (mine is /home/shengq2/mono5):
+Although one essential software cqstools in TIGER is developed by C#, it is majorly executed under linux through [mono] (https://github.com/mono/mono). So mono on your linux system is required for cqstools.  Both mono4 and mono5 are good for running cqstools. For people who doesn't have root permission to install mono, you may install mono into your own directory (mine is /home/shengq2/mono5). It will take time to install mono since it is a big software package.
 
 ```
 MONO_HOME="/home/shengq2/mono5"
@@ -155,16 +154,16 @@ cp bowtie-1.2.2-linux-x86_64/bowtie* $TARGET_BIN
 cqstools will be used in preprocessing the reads, counting mapping result and summerizing table. You can install it as following. You will use absolute path of cqstools.exe in your configuration file.
 
 ```
-VER=1.7.6
-wget https://github.com/shengqh/CQS.Tools/releases/download/v${VER}/cqstools.${VER}.zip
-unzip cqstools.${VER}.zip
-if [ -s cqstools.${VER} ]; then
+CQS_VER=1.7.6
+wget https://github.com/shengqh/CQS.Tools/releases/download/v${CQS_VER}/cqstools.${CQS_VER}.zip
+unzip cqstools.${CQS_VER}.zip
+if [ -s cqstools.${CQS_VER} ]; then
   if [ -s cqstools ]; then
     rm cqstools
   fi
-  ln -s cqstools.${VER} cqstools
+  ln -s cqstools.${CQS_VER} cqstools
   chmod 755 cqstools/cqstools
-  rm cqstools.${VER}.zip
+  rm cqstools.${CQS_VER}.zip
 fi
 ```
 
@@ -173,13 +172,13 @@ fi
 samtools is widely used in next generation sequencing analysis. You can install it as following.
 
 ```
-VER=1.7
+SAMTOOLS_VER=1.7
 TARGET_BIN=${HOME}/local
-wget https://github.com/samtools/samtools/releases/download/${VER}/samtools-${VER}.tar.bz2
-tar -xjvf samtools-${VER}.tar.bz2
-if [ -s samtools-${VER} ]; then
-  rm samtools-${VER}.tar.bz2
-  cd samtools-${VER}
+wget https://github.com/samtools/samtools/releases/download/${SAMTOOLS_VER}/samtools-${SAMTOOLS_VER}.tar.bz2
+tar -xjvf samtools-${SAMTOOLS_VER}.tar.bz2
+if [ -s samtools-${SAMTOOLS_VER} ]; then
+  rm samtools-${SAMTOOLS_VER}.tar.bz2
+  cd samtools-${SAMTOOLS_VER}
   ./configure --prefix=${TARGET_BIN}
   make
   make install
@@ -200,7 +199,7 @@ git clone https://github.com/shengqh/TIGER.git
 
 ## database
 
-You can download the required databases:
+You can download the required [databases](download_tigerdb.sh):
 
 ```
 mkdir bowtie_index
@@ -251,4 +250,4 @@ wget https://cqsweb.app.vumc.org/download1/annotation/rn5_miRBase21_GtRNAdb2_ens
 
 # Example
 
-There is an example called "tiger.pl" in the folder. When you have a new project, you may copy this template file to your project folder and modify it.
+There is an example called [tiger.pl](tiger.pl) in the folder. When you have a new project, you may copy this template file to your project folder and modify it.

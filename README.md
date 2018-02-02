@@ -40,14 +40,14 @@ git clone https://github.com/shengqh/ngsperl.git
 
 ```
 
-Please remember to add the folder directories to perl path in your .bashrc file.
+Please remember to add the folder directories to perl path in your .bashrc file, for example
 ```
 export PERL5LIB=/scratch/cqs/shengq2/packages/ngsperl/lib:/home/shengq2/perl5/lib/perl5:$PERL5LIB
 ```
 
 ## python 2.7+
 
-A few softwares require the python environment, such as cutadapt. You may install the packages to default folder:
+A few softwares require the python environment, such as cutadapt. You may install the required python packages/softwares to default folder:
 
 ```
 pip install operator
@@ -57,16 +57,17 @@ pip install xml.etree.ElementTree
 pip install cutadapt
 ```
 
-Or you can install packages into your own folder if you don't have root permission. Here, I install the packages into my own python library folder "/scratch/cqs/shengq2/pythonlib", please replace it with your own folder.
+Or you can install them into your own folder if you don't have root permission. Here, I install the packages into my own python library folder "/scratch/cqs/shengq2/pythonlib", please replace it with your own folder.
 
 ```
 pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" operator
 pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" Bio.Seq
 pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" pysam
 pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" xml.etree.ElementTree
+pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" cutadapt
 ```
 
-Also, remember to add the folder directory to python path in your .bashrc file.
+If you installed the packages/softwares into your own folder, please remember to add the folder directory to python path in your .bashrc file.
 
 ```
 export PYTHONPATH=/scratch/cqs/shengq2/pythonlib/lib/python2.7/site-packages:$PYTHONPATH
@@ -136,37 +137,16 @@ if [ -s FastQC ]; then
 fi
 ```
 
-### cutadapt (https://cutadapt.readthedocs.io/en/stable/)
-
-cutadapt will be used for adapter trimming. You can install cutadapt by:
-
-```
-pip install cutadapt
-```
-
-or
-
-```
-pip install --install-option="--prefix=/scratch/cqs/shengq2/pythonlib" cutadapt
-```
-
 ### bowtie (http://bowtie-bio.sourceforge.net/index.shtml)
 
 bowtie will be used to map read to host genome, non-host library and non-host genome. Following commands install bowtie into folder $TARGET_BIN ($TARGET_BIN should be in your path):
 
 ```
-VER=0.12.9
-TARGET_BIN=/scratch/cqs/shengq2/local/bin
-wget http://sourceforge.net/projects/bowtie-bio/files/bowtie/${VER}/bowtie-${VER}-src.zip
-unzip bowtie-${VER}-src.zip
-if [ -s bowtie-${VER} ]; then
-  rm bowtie-${VER}-src.zip
-  cd bowtie-${VER}
-  make
-  if [ -s bowtie ]; then
-    cp bowtie bowtie-build bowtie-inspect $TARGET_BIN
-  fi
-fi
+TARGET_BIN=TARGET_BIN=${HOME}/local/bin
+wget bowtie-1.2.2-linux-x86_64.zip https://github.com/BenLangmead/bowtie/releases/download/v1.2.2_p1/bowtie-1.2.2-linux-x86_64.zip
+unzip bowtie-1.2.2-linux-x86_64.zip
+rm bowtie-1.2.2-linux-x86_64.zip
+cp bowtie-1.2.2-linux-x86_64/bowtie* $TARGET_BIN
 
 ```
 
@@ -175,7 +155,7 @@ fi
 cqstools will be used in preprocessing the reads, counting mapping result and summerizing table. You can install it as following. You will use absolute path of cqstools.exe in your configuration file.
 
 ```
-VER=1.7.5
+VER=1.7.6
 wget https://github.com/shengqh/CQS.Tools/releases/download/v${VER}/cqstools.${VER}.zip
 unzip cqstools.${VER}.zip
 if [ -s cqstools.${VER} ]; then
@@ -193,8 +173,8 @@ fi
 samtools is widely used in next generation sequencing analysis. You can install it as following.
 
 ```
-VER=1.3.1
-TARGET_BIN=${HOME}/local/bin
+VER=1.7
+TARGET_BIN=${HOME}/local
 wget https://github.com/samtools/samtools/releases/download/${VER}/samtools-${VER}.tar.bz2
 tar -xjvf samtools-${VER}.tar.bz2
 if [ -s samtools-${VER} ]; then
@@ -212,12 +192,10 @@ fi
 
 ##software
 
-TIGER and required R packages can be installed from github server.
+TIGER can be downloaded from github server.
 
 ```
 git clone https://github.com/shengqh/TIGER.git
-cd TIGER
-R CMD BATCH install_packages.r
 ```
 
 ## database

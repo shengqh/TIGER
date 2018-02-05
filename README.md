@@ -223,6 +223,8 @@ tar -xzvf rn5.tar.gz
 rm *.tar.gz
 ```
 
+If you want to do the blast on read sequences, please download the ncbi blast database using [https://github.com/jrherr/bioinformatics_scripts/blob/master/perl_scripts/update_blastdb.pl](https://github.com/jrherr/bioinformatics_scripts/blob/master/perl_scripts/update_blastdb.pl)
+
 <a name="Example"/>
 
 # Example

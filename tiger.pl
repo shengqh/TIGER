@@ -8,6 +8,7 @@ use Pipeline::SmallRNAUtils;
 use CQS::ClassFactory;
 
 my $smallrna_db="/workspace/shengq2/smallrna_db";
+my $blast_db="/scratch/cqs/shengq2/references/blastdb";
 
 my $def = {
   #task_name of the project. Don't contain space in the name which may cause problem.
@@ -76,6 +77,7 @@ my $def = {
   #non-host library
   'search_nonhost_library' => 1,
   'bowtie1_miRBase_index'  => '$smallrna_db/mature.dna',
+  #the host prefix in mirbase, set "-p hsa" for human and "-p rno" for rat
   'mirbase_count_option'   => '-p mmu',
   'bowtie1_tRNA_index'     => "$smallrna_db/GtRNAdb2.20161214.mature",
   'trna_category_map'      => "$smallrna_db/GtRNAdb2.20161214.category.map",
@@ -85,7 +87,7 @@ my $def = {
 
   #blast
   'blast_top_reads'      => 0,
-  'blast_localdb'        => '/scratch/cqs/shengq2/references/blastdb',
+  'blast_localdb'        => $blast_db,
   'blast_unmapped_reads' => 0,
 
   #differential expression

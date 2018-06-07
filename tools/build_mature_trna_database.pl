@@ -104,8 +104,8 @@ my $individualSpecies = {
 
 my $targetDirectoryTemp;
 if ( !defined($targetDirectory) ) {
-  $targetDirectory     = "/scratch/cqs/shengq1/references/smallrna/v3/GtRNAdb2";
-  $targetDirectoryTemp = "/scratch/cqs/shengq1/references/ucsc/GtRNAdb2/temp";
+  $targetDirectory     = "/scratch/cqs/references/smallrna/GtRNAdb2";
+  $targetDirectoryTemp = "/scratch/cqs/references/smallrna/GtRNAdb2/temp";
 }
 else {
   $targetDirectoryTemp = $targetDirectory . "/temp/";

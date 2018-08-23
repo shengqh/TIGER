@@ -57,7 +57,7 @@ pip install pysam
 pip install cutadapt
 ```
 
-Or you can install them into your own folder if you don't have root permission. Here, I install the packages into my own python library folder "/scratch/cqs/shengq2/pythonlib", please replace it with your own folder.[install_pythonlib.sh](install_pythonlib.sh)
+Or you can install them into your own folder if you don't have root permission. Here, I install the packages into my own python library folder "/home/shengq2/python2", please replace it with your own folder.[install_pythonlib.sh](install_pythonlib.sh)
 
 ```
 PYTHONLIB="/home/shengq2/python2"
@@ -139,7 +139,7 @@ fi
 bowtie will be used to map read to host genome, non-host library and non-host genome. Following commands install bowtie into folder $TARGET_BIN ($TARGET_BIN should be in your path):
 
 ```
-TARGET_BIN=TARGET_BIN=${HOME}/local/bin
+TARGET_BIN=${HOME}/local/bin
 wget bowtie-1.2.2-linux-x86_64.zip https://github.com/BenLangmead/bowtie/releases/download/v1.2.2_p1/bowtie-1.2.2-linux-x86_64.zip
 unzip bowtie-1.2.2-linux-x86_64.zip
 rm bowtie-1.2.2-linux-x86_64.zip
@@ -152,7 +152,7 @@ cp bowtie-1.2.2-linux-x86_64/bowtie* $TARGET_BIN
 cqstools will be used in preprocessing the reads, counting mapping result and summerizing table. You can install it as following. You will use absolute path of cqstools.exe in your configuration file.
 
 ```
-CQS_VER=1.7.6
+CQS_VER=1.7.9
 wget https://github.com/shengqh/CQS.Tools/releases/download/v${CQS_VER}/cqstools.${CQS_VER}.zip
 unzip cqstools.${CQS_VER}.zip
 if [ -s cqstools.${CQS_VER} ]; then

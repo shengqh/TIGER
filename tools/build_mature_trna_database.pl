@@ -231,7 +231,9 @@ if ( !-s $trnafa ) {
       my $indBed         = $targetDirectoryIndividuals . $bedfile;
       my $indFasta       = $targetDirectoryIndividuals . $fastafile;
       my $indMatureFasta = $targetDirectoryIndividuals . $file . ".mature.fa";
-      `cp $bedfile $indBed; cp $fastafile $indFasta;`;
+      my $cmd = "cp $bedfile $indBed; cp $fastafile $indFasta;";
+      print($cmd . "\n");
+      `$cmd`;
       buildMatureFasta( $indBed, $indFasta, $indMatureFasta );
     }
 

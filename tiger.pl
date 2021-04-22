@@ -7,10 +7,12 @@ use Pipeline::SmallRNA;
 use Pipeline::SmallRNAUtils;
 use CQS::ClassFactory;
 
-my $smallrna_db="/workspace/shengq2/smallrna_db";
+my $smallrna_db="/scratch/cqs_share/references/smallrna";
 my $blast_db="/scratch/cqs/shengq2/references/blastdb";
 
 my $def = {
+  docker_command => "singularity exec -e /scratch/cqs/softwares/singularity/cqs-smallRNA.simg ",
+
   #task_name of the project. Don't contain space in the name which may cause problem.
   'task_name'  => '3018-KCV_76_mouse',
   
@@ -21,7 +23,7 @@ my $def = {
   #'constraint' => 'haswell',
   
   #target folder to save the result. Don't contain space in the name which may cause problem.
-  'target_dir' => '/workspace/shengq2/20171219_smallRNA_3018-KCV_76_mouse_v3',
+  'target_dir' => '/scratch/cqs/shengq2/temp/20210422_smallRNA_3018-KCV_76_mouse_v3',
   
   #email for cluster notification
   'email'      => 'quanhu.sheng.1@vanderbilt.edu',
@@ -31,6 +33,9 @@ my $def = {
 
   #preprocessing
   
+  #is paired end data?
+  is_paired_end => 0,
+
   #remove terminal 'N' in fastq reads
   'fastq_remove_N'      => 1,
   
@@ -74,6 +79,14 @@ my $def = {
   'bowtie1_fungus_group4_index'   => "$smallrna_db/20160225_Group4SpeciesAll",
   'fungus_group4_species_map'     => "$smallrna_db/20160225_Group4SpeciesAll.species.map",
 
+  #virus
+  bowtie1_virus_group6_index => "$smallrna_db/20200305_viral_genomes",
+  virus_group6_species_map   => "$smallrna_db/20200305_viral_genomes.map",
+
+  #algae database
+  bowtie1_algae_group5_index => "$smallrna_db/20200214_AlgaeSpeciesAll.species",
+  algae_group5_species_map   => "$smallrna_db/20200214_AlgaeSpeciesAll.species.map",
+
   #non-host library
   'search_nonhost_library' => 1,
   'bowtie1_miRBase_index'  => '$smallrna_db/mature.dna',
@@ -104,18 +117,18 @@ my $def = {
 
   #data
   'files' => {
-    'IP_ApoE_HFD_02'  => ['/scratch/cqs/zhaos/vickers/data/3018/3018-KCV-76/3018/3018-KCV-76-i34_S10_R1_001.fastq.gz'],
-    'IP_ApoE_Chow_02' => ['/scratch/cqs/zhaos/vickers/data/3018/3018-KCV-76/3018/3018-KCV-76-i30_S6_R1_001.fastq.gz'],
-    'IP_ApoE_HFD_04'  => ['/scratch/cqs/zhaos/vickers/data/3018/3018-KCV-76/3018/3018-KCV-76-i36_S12_R1_001.fastq.gz'],
-    'IP_WT_Chow_03'   => ['/scratch/cqs/zhaos/vickers/data/3018/3018-KCV-76/3018/3018-KCV-76-i27_S3_R1_001.fastq.gz'],
-    'IP_WT_Chow_02'   => ['/scratch/cqs/zhaos/vickers/data/3018/3018-KCV-76/3018/3018-KCV-76-i26_S2_R1_001.fastq.gz'],
-    'IP_ApoE_Chow_03' => ['/scratch/cqs/zhaos/vickers/data/3018/3018-KCV-76/3018/3018-KCV-76-i31_S7_R1_001.fastq.gz'],
-    'IP_ApoE_HFD_01'  => ['/scratch/cqs/zhaos/vickers/data/3018/3018-KCV-76/3018/3018-KCV-76-i33_S9_R1_001.fastq.gz'],
-    'IP_WT_Chow_04'   => ['/scratch/cqs/zhaos/vickers/data/3018/3018-KCV-76/3018/3018-KCV-76-i28_S4_R1_001.fastq.gz'],
-    'IP_ApoE_HFD_03'  => ['/scratch/cqs/zhaos/vickers/data/3018/3018-KCV-76/3018/3018-KCV-76-i35_S11_R1_001.fastq.gz'],
-    'IP_ApoE_Chow_01' => ['/scratch/cqs/zhaos/vickers/data/3018/3018-KCV-76/3018/3018-KCV-76-i29_S5_R1_001.fastq.gz'],
-    'IP_WT_Chow_01'   => ['/scratch/cqs/zhaos/vickers/data/3018/3018-KCV-76/3018/3018-KCV-76-i25_S1_R1_001.fastq.gz'],
-    'IP_ApoE_Chow_04' => ['/scratch/cqs/zhaos/vickers/data/3018/3018-KCV-76/3018/3018-KCV-76-i32_S8_R1_001.fastq.gz']
+    'IP_ApoE_HFD_02'  => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i34_S10_R1_001.fastq.gz'],
+    'IP_ApoE_Chow_02' => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i30_S6_R1_001.fastq.gz'],
+    'IP_ApoE_HFD_04'  => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i36_S12_R1_001.fastq.gz'],
+    'IP_WT_Chow_03'   => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i27_S3_R1_001.fastq.gz'],
+    'IP_WT_Chow_02'   => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i26_S2_R1_001.fastq.gz'],
+    'IP_ApoE_Chow_03' => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i31_S7_R1_001.fastq.gz'],
+    'IP_ApoE_HFD_01'  => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i33_S9_R1_001.fastq.gz'],
+    'IP_WT_Chow_04'   => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i28_S4_R1_001.fastq.gz'],
+    'IP_ApoE_HFD_03'  => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i35_S11_R1_001.fastq.gz'],
+    'IP_ApoE_Chow_01' => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i29_S5_R1_001.fastq.gz'],
+    'IP_WT_Chow_01'   => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i25_S1_R1_001.fastq.gz'],
+    'IP_ApoE_Chow_04' => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i32_S8_R1_001.fastq.gz']
   },
   'groups' => {
     'IP_ApoE_HFD'  => [ 'IP_ApoE_HFD_01',  'IP_ApoE_HFD_02',  'IP_ApoE_HFD_03',  'IP_ApoE_HFD_04' ],

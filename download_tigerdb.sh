@@ -8,8 +8,10 @@ wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20170206_Group1.
 tar -xzvf 20170206_Group1.tar.gz
 wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20160225_Group4.tar.gz
 tar -xzvf 20160225_Group4.tar.gz
-wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20160225_Group4.tar.gz
-tar -xzvf 20160225_Group4.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200305_viral_genomes.tar.gz
+tar -xzvf 20200305_viral_genomes.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200214_AlgaeSpeciesAll.tar.gz
+tar -xzvf 20200214_AlgaeSpeciesAll.tar.gz
 wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200130_hg19_miRBase22_GtRNAdb2_gencode19.tar.gz
 tar -xzvf 20200130_hg19_miRBase22_GtRNAdb2_gencode19.tar.gz
 wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200130_hg38_miRBase22_GtRNAdb2_gencode33.tar.gz

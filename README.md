@@ -210,8 +210,10 @@ wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20170206_Group1.
 tar -xzvf 20170206_Group1.tar.gz
 wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20160225_Group4.tar.gz
 tar -xzvf 20160225_Group4.tar.gz
-wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20160225_Group4.tar.gz
-tar -xzvf 20160225_Group4.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200305_viral_genomes.tar.gz
+tar -xzvf 20200305_viral_genomes.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200214_AlgaeSpeciesAll.tar.gz
+tar -xzvf 20200214_AlgaeSpeciesAll.tar.gz
 wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200130_hg19_miRBase22_GtRNAdb2_gencode19.tar.gz
 tar -xzvf 20200130_hg19_miRBase22_GtRNAdb2_gencode19.tar.gz
 wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200130_hg38_miRBase22_GtRNAdb2_gencode33.tar.gz
@@ -238,5 +240,11 @@ Once you generate the folder and scripts, go to the sequencetask/pbs folder. The
 * Run the step_1_st.sh to submit the individual file level tasks to cluster. Those individual tasks are usually time cost. Once all tasks are done, you can run \_pipeline_st.pbs to run all other tasks sequentially.
 
 
+# Singularity
 
+I will recommend you to run the neccessory softwares through singularity.
+
+```
+singularity build cqs_smallrna.sif shengqh/bioinfo:cqs-smallRNA
+```
 

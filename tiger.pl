@@ -58,9 +58,9 @@ my $def = {
   #host genome
   'search_host_genome'   => 1,
   'search_not_identical' => 1,
-  'bowtie1_index'        => "$smallrna_db/mm10_miRBase21_GtRNAdb2_gencode12_ncbi",
-  'coordinate'           => "$smallrna_db/mm10_miRBase21_GtRNAdb2_gencode12_ncbi.bed",
-  'coordinate_fasta'     => "$smallrna_db/mm10_miRBase21_GtRNAdb2_gencode12_ncbi.bed.fa",
+  'bowtie1_index'        => "$smallrna_db/mm10_miRBase22_GtRNAdb2_gencode24_ncbi",
+  'coordinate'           => "$smallrna_db/mm10_miRBase22_GtRNAdb2_gencode24_ncbi.bed",
+  'coordinate_fasta'     => "$smallrna_db/mm10_miRBase22_GtRNAdb2_gencode24_ncbi.bed.fa",
   'hasSnoRNA'            => 1,
   'hasYRNA'              => 0,
   'hasSnRNA'             => 1,

@@ -47,30 +47,30 @@ Please remember to add the folders to perl path in your .bashrc file, for exampl
 export PERL5LIB=/home/shengq2/program/ngsperl/lib:/home/shengq2/perl5/lib/perl5:$PERL5LIB
 ```
 
-## python 2.7+
+## python 3.7+
 
 A few softwares require the python environment, such as cutadapt. You may install the required python packages/softwares to default folder:
 
 ```
-pip install biopython
-pip install pysam
-pip install cutadapt
+pip3 install biopython
+pip3 install pysam
+pip3 install cutadapt
 ```
 
-Or you can install them into your own folder if you don't have root permission. Here, I install the packages into my own python library folder "/home/shengq2/python2", please replace it with your own folder.[install_pythonlib.sh](install_pythonlib.sh)
+Or you can install them into your own folder if you don't have root permission. Here, I install the packages into my own python library folder "/home/shengq2/python3", please replace it with your own folder.[install_pythonlib.sh](install_pythonlib.sh)
 
 ```
-PYTHONLIB="/home/shengq2/python2"
-pip install --install-option="--prefix=${PYTHONLIB}" biopython
-pip install --install-option="--prefix=${PYTHONLIB}" pysam
-pip install --install-option="--prefix=${PYTHONLIB}" cutadapt
+PYTHONLIB="/home/shengq2/python3"
+pip3 install --install-option="--prefix=${PYTHONLIB}" biopython
+pip3 install --install-option="--prefix=${PYTHONLIB}" pysam
+pip3 install --install-option="--prefix=${PYTHONLIB}" cutadapt
 ```
 
 If you installed the packages/softwares into your own folder, please remember to add the folder directory to python path in your .bashrc file.
 
 ```
-export PYTHONPATH=/home/shengq2/python2/lib/python2.7/site-packages:$PYTHONPATH
-export PATH=/home/shengq2/python2/bin:$PATH
+export PYTHONPATH=/home/shengq2/python3/lib/python3.7/site-packages:$PYTHONPATH
+export PATH=/home/shengq2/python3/bin:$PATH
 ```
 
 ## mono 5+
@@ -93,9 +93,9 @@ Remember to add the bin directory of that installed directory into your path env
 export PATH=/home/shengq2/mono5/bin:$PATH
 ```
 
-## R 3.2+
+## R 4.0+
 
-A lot of statistical analysis and graph generation is based on R package. R 3.2+ is required to be installed in your system. (https://www.r-project.org/). Also, following libraries are required:
+A lot of statistical analysis and graph generation is based on R package. R 4.0+ is required to be installed in your system. (https://www.r-project.org/). Also, following libraries are required:
 
 ```
 install.packages("RColorBrewer", repos='http://cran.us.r-project.org')
@@ -200,26 +200,26 @@ git clone https://github.com/shengqh/TIGER.git
 You can download the required [databases](download_tigerdb.sh):
 
 ```
-wget https://cqsweb.app.vumc.org/download1/mirBase21.tar.gz
-tar -xzvf mirBase21.tar.gz
-wget https://cqsweb.app.vumc.org/download1/GtRNAdb2.tar.gz
-tar -xzvf GtRNAdb2.tar.gz
-wget https://cqsweb.app.vumc.org/download1/SILVA_128.tar.gz
-tar -xzvf SILVA_128.tar.gz
-wget https://cqsweb.app.vumc.org/download1/group1.tar.gz
-tar -xzvf group1.tar.gz
-wget https://cqsweb.app.vumc.org/download1/group2.tar.gz
-tar -xzvf group2.tar.gz
-wget https://cqsweb.app.vumc.org/download1/group4.tar.gz
-tar -xzvf group4.tar.gz
-wget https://cqsweb.app.vumc.org/download1/hg19.tar.gz
-tar -xzvf hg19.tar.gz
-wget https://cqsweb.app.vumc.org/download1/hg38.tar.gz
-tar -xzvf hg38.tar.gz
-wget https://cqsweb.app.vumc.org/download1/mm10.tar.gz
-tar -xzvf mm10.tar.gz
-wget https://cqsweb.app.vumc.org/download1/rn5.tar.gz
-tar -xzvf rn5.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20180312_mirbase22.tar.gz
+tar -xzvf 20180312_mirbase22.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20161214_GtRNAdb2.tar.gz
+tar -xzvf 20161214_GtRNAdb2.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20160929_SILVA_128.tar.gz
+tar -xzvf 20160929_SILVA_128.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20170206_Group1.tar.gz
+tar -xzvf 20170206_Group1.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20160225_Group4.tar.gz
+tar -xzvf 20160225_Group4.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20160225_Group4.tar.gz
+tar -xzvf 20160225_Group4.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200130_hg19_miRBase22_GtRNAdb2_gencode19.tar.gz
+tar -xzvf 20200130_hg19_miRBase22_GtRNAdb2_gencode19.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200130_hg38_miRBase22_GtRNAdb2_gencode33.tar.gz
+tar -xzvf 20200130_hg38_miRBase22_GtRNAdb2_gencode33.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200130_mm10_miRBase22_GtRNAdb2_gencode24.tar.gz
+tar -xzvf 20200130_mm10_miRBase22_GtRNAdb2_gencode24.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200130_rn6_miRBase22_GtRNAdb2_ensembl99.tar.gz
+tar -xzvf 20200130_rn6_miRBase22_GtRNAdb2_ensembl99.tar.gz
 rm *.tar.gz
 ```
 

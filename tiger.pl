@@ -9,12 +9,13 @@ use CQS::ClassFactory;
 
 my $smallrna_db="/data/cqs/references/smallrna";
 my $blast_db="/scratch/cqs/shengq2/references/blastdb";
+my $singularity_image="/data/cqs/softwares/singularity/cqs-smallRNA.simg";
 
 my $def = {
-  docker_command => "singularity exec -e /data/cqs/softwares/singularity/cqs-smallRNA.simg ",
+  docker_command => "singularity exec -e $singularity_image ",
 
   #task_name of the project. Don't contain space in the name which may cause problem.
-  'task_name'  => '3018-KCV_76_mouse',
+  'task_name'  => 'test_proj',
   
   #cluster manager, either slurm or Torque
   'cluster'    => 'slurm',
@@ -23,10 +24,10 @@ my $def = {
   #'constraint' => 'haswell',
   
   #target folder to save the result. Don't contain space in the name which may cause problem.
-  'target_dir' => '/scratch/cqs/shengq2/temp/20210422_smallRNA_3018-KCV_76_mouse_v3',
+  'target_dir' => '/scratch/cqs/shengq2/temp/smallrna_test_proj',
   
   #email for cluster notification
-  'email'      => 'quanhu.sheng.1@vanderbilt.edu',
+  'email'      => 'quanhu.sheng.1@vumc.org',
   
   #preprocessing
   
@@ -133,8 +134,16 @@ my $def = {
     'Ctrl'  => "Ctrl",
     'Treat'   => "Treat",
   },
+  #you can also define group directly
+  # 'groups' => {
+  #   'Ctrl' => ["Ctrl_1","Ctrl_2","Ctrl_3"],
+  #   'Treat' => ["Treat_4","Treat_5","Treat_6"],
+  # },
+
+  #define comparison
   'pairs' => {
     'Treat_vs_Ctrl' => {
+      #the first group would be control group
       'groups' => [ 'Ctrl', 'Treat' ]
     },
   },

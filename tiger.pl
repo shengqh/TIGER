@@ -76,7 +76,8 @@ my $def = {
   'bowtie1_fungus_group4_index'   => "$smallrna_db/20160225_Group4SpeciesAll",
   'fungus_group4_species_map'     => "$smallrna_db/20160225_Group4SpeciesAll.species.map",
 
-  'search_refseq_genome' => 0,
+  #this feature is not open yet
+  'search_refseq_bacteria' => 0,
 
   #virus
   bowtie1_virus_group6_index => "$smallrna_db/20200305_viral_genomes",

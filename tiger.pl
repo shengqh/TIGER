@@ -7,11 +7,11 @@ use Pipeline::SmallRNA;
 use Pipeline::SmallRNAUtils;
 use CQS::ClassFactory;
 
-my $smallrna_db="/scratch/cqs_share/references/smallrna";
+my $smallrna_db="/data/cqs/references/smallrna";
 my $blast_db="/scratch/cqs/shengq2/references/blastdb";
 
 my $def = {
-  docker_command => "singularity exec -e /scratch/cqs/softwares/singularity/cqs-smallRNA.simg ",
+  docker_command => "singularity exec -e /data/cqs/softwares/singularity/cqs-smallRNA.simg ",
 
   #task_name of the project. Don't contain space in the name which may cause problem.
   'task_name'  => '3018-KCV_76_mouse',
@@ -28,9 +28,6 @@ my $def = {
   #email for cluster notification
   'email'      => 'quanhu.sheng.1@vanderbilt.edu',
   
-  #absolute cqstools location
-  'cqstools'   => '/home/shengq2/cqstools/cqstools.exe',
-
   #preprocessing
   
   #is paired end data?
@@ -79,6 +76,8 @@ my $def = {
   'bowtie1_fungus_group4_index'   => "$smallrna_db/20160225_Group4SpeciesAll",
   'fungus_group4_species_map'     => "$smallrna_db/20160225_Group4SpeciesAll.species.map",
 
+  'search_refseq_genome' => 0,
+
   #virus
   bowtie1_virus_group6_index => "$smallrna_db/20200305_viral_genomes",
   virus_group6_species_map   => "$smallrna_db/20200305_viral_genomes.map",
@@ -89,7 +88,7 @@ my $def = {
 
   #non-host library
   'search_nonhost_library' => 1,
-  'bowtie1_miRBase_index'  => '$smallrna_db/mature.dna',
+  'bowtie1_miRBase_index'  => "$smallrna_db/mature.dna",
   #the host prefix in mirbase, set "-p hsa" for human and "-p rno" for rat
   'mirbase_count_option'   => '-p mmu',
   'bowtie1_tRNA_index'     => "$smallrna_db/GtRNAdb2.20161214.mature",
@@ -108,7 +107,12 @@ my $def = {
   'DE_fold_change'              => '1.5',
   'DE_detected_in_both_group'   => 1,
   'DE_use_raw_pvalue'           => 0,
-  'DE_library_key'              => 'TotalReads',
+  
+  #TotalReads, FeatureReads, or none. 
+  #TotalReads will use all valid reads for size factor calculation
+  #FeatureReads will use all mapped host smallRNA reads for size factor calculation
+  #none will use mapped category reads (for example, all miRNA reads when performing DE for miRNA) for size factor calculation
+  'DE_library_key'              => 'TotalReads', 
   'DE_min_median_read'          => 5,
   'DE_min_median_read_smallRNA' => 5,
   
@@ -117,30 +121,20 @@ my $def = {
 
   #data
   'files' => {
-    'IP_ApoE_HFD_02'  => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i34_S10_R1_001.fastq.gz'],
-    'IP_ApoE_Chow_02' => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i30_S6_R1_001.fastq.gz'],
-    'IP_ApoE_HFD_04'  => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i36_S12_R1_001.fastq.gz'],
-    'IP_WT_Chow_03'   => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i27_S3_R1_001.fastq.gz'],
-    'IP_WT_Chow_02'   => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i26_S2_R1_001.fastq.gz'],
-    'IP_ApoE_Chow_03' => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i31_S7_R1_001.fastq.gz'],
-    'IP_ApoE_HFD_01'  => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i33_S9_R1_001.fastq.gz'],
-    'IP_WT_Chow_04'   => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i28_S4_R1_001.fastq.gz'],
-    'IP_ApoE_HFD_03'  => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i35_S11_R1_001.fastq.gz'],
-    'IP_ApoE_Chow_01' => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i29_S5_R1_001.fastq.gz'],
-    'IP_WT_Chow_01'   => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i25_S1_R1_001.fastq.gz'],
-    'IP_ApoE_Chow_04' => ['/data/vickers_lab/20160529_3018-KCV-76/3018/3018-KCV-76-i32_S8_R1_001.fastq.gz']
+    'Ctrl_1' => [ '/scratch/cqs/pipeline_example/smallrna_data/S1_R1_001.fastq.gz' ],
+    'Ctrl_2' => [ '/scratch/cqs/pipeline_example/smallrna_data/S2_R1_001.fastq.gz' ],
+    'Ctrl_3' => [ '/scratch/cqs/pipeline_example/smallrna_data/S3_R1_001.fastq.gz' ],
+    'Treat_4' => [ '/scratch/cqs/pipeline_example/smallrna_data/S4_R1_001.fastq.gz' ],
+    'Treat_5' => [ '/scratch/cqs/pipeline_example/smallrna_data/S5_R1_001.fastq.gz' ],
+    'Treat_6' => [ '/scratch/cqs/pipeline_example/smallrna_data/S6_R1_001.fastq.gz' ],
   },
-  'groups' => {
-    'IP_ApoE_HFD'  => [ 'IP_ApoE_HFD_01',  'IP_ApoE_HFD_02',  'IP_ApoE_HFD_03',  'IP_ApoE_HFD_04' ],
-    'IP_ApoE_Chow' => [ 'IP_ApoE_Chow_01', 'IP_ApoE_Chow_02', 'IP_ApoE_Chow_03', 'IP_ApoE_Chow_04' ],
-    'IP_WT_Chow'   => [ 'IP_WT_Chow_01',   'IP_WT_Chow_02',   'IP_WT_Chow_03',   'IP_WT_Chow_04' ],
+  'groups_pattern' => {
+    'Ctrl'  => "Ctrl",
+    'Treat'   => "Treat",
   },
   'pairs' => {
-    'IP_ApoE_Chow_VS_IP_WT_Chow' => {
-      'groups' => [ 'IP_WT_Chow', 'IP_ApoE_Chow' ]
-    },
-    'IP_ApoE_HFD_VS_IP_ApoE_Chow' => {
-      'groups' => [ 'IP_ApoE_Chow', 'IP_ApoE_HFD' ]
+    'Treat_vs_Ctrl' => {
+      'groups' => [ 'Ctrl', 'Treat' ]
     },
   },
 };

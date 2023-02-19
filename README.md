@@ -61,6 +61,8 @@ wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20160929_SILVA_1
 tar -xzvf 20160929_SILVA_128.tar.gz
 wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20170206_Group1.tar.gz
 tar -xzvf 20170206_Group1.tar.gz
+wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20160907_Group2.tar.gz
+tar -xzvf 20160907_Group2.tar.gz
 wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20160225_Group4.tar.gz
 tar -xzvf 20160225_Group4.tar.gz
 wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200305_viral_genomes.tar.gz
@@ -77,8 +79,6 @@ wget https://cqsweb.app.vumc.org/download1/annotateGenome/TIGER/20200130_rn6_miR
 tar -xzvf 20200130_rn6_miRBase22_GtRNAdb2_ensembl99.tar.gz
 rm *.tar.gz
 ```
-
-If you want to do the blast on read sequences, please download the ncbi blast database using [https://github.com/jrherr/bioinformatics_scripts/blob/master/perl_scripts/update_blastdb.pl](https://github.com/jrherr/bioinformatics_scripts/blob/master/perl_scripts/update_blastdb.pl)
 
 <a name="Example"/>
 

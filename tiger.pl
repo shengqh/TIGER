@@ -8,11 +8,10 @@ use Pipeline::SmallRNAUtils;
 use CQS::ClassFactory;
 
 my $smallrna_db="/data/cqs/references/smallrna";
-my $blast_db="/scratch/cqs/shengq2/references/blastdb";
 my $singularity_image="/data/cqs/softwares/singularity/cqs-smallRNA.simg";
 
 my $def = {
-  docker_command => "singularity exec -e $singularity_image ",
+  'docker_command' => "singularity exec -e $singularity_image ",
 
   #task_name of the project. Don't contain space in the name which may cause problem.
   'task_name'  => 'test_proj',
@@ -32,7 +31,7 @@ my $def = {
   #preprocessing
   
   #is paired end data?
-  is_paired_end => 0,
+  "is_paired_end" => 0,
 
   #remove terminal 'N' in fastq reads
   'fastq_remove_N'      => 1,
@@ -43,7 +42,7 @@ my $def = {
   #trimming reads or not
   'perform_cutadapt'    => 1,
   
-  #remove random bases before adapter trimming (NextFlex), set to 0 if no bases need to be removed (TruSeq).
+  #remove random bases before adapter trimming (NextFlex), set to 0 if no bases need to be removed (for example, TruSeq).
   'fastq_remove_random' => 4,
   
   #trimming adapter
@@ -81,12 +80,12 @@ my $def = {
   'search_refseq_bacteria' => 0,
 
   #virus
-  bowtie1_virus_group6_index => "$smallrna_db/20200305_viral_genomes",
-  virus_group6_species_map   => "$smallrna_db/20200305_viral_genomes.map",
+  'bowtie1_virus_group6_index' => "$smallrna_db/20200305_viral_genomes",
+  'virus_group6_species_map'   => "$smallrna_db/20200305_viral_genomes.map",
 
   #algae database
-  bowtie1_algae_group5_index => "$smallrna_db/20200214_AlgaeSpeciesAll.species",
-  algae_group5_species_map   => "$smallrna_db/20200214_AlgaeSpeciesAll.species.map",
+  'bowtie1_algae_group5_index' => "$smallrna_db/20200214_AlgaeSpeciesAll.species",
+  'algae_group5_species_map'   => "$smallrna_db/20200214_AlgaeSpeciesAll.species.map",
 
   #non-host library
   'search_nonhost_library' => 1,
@@ -98,11 +97,6 @@ my $def = {
   'trna_map'               => "$smallrna_db/GtRNAdb2.20161214.map",
   'bowtie1_rRNA_index'     => "$smallrna_db/SILVA_128.rmdup",
   'rrna_category_map'      => "$smallrna_db/SILVA_128.rmdup.category.map",
-
-  #blast
-  'blast_top_reads'      => 0,
-  'blast_localdb'        => $blast_db,
-  'blast_unmapped_reads' => 0,
 
   #differential expression
   'DE_pvalue'                   => '0.05',
@@ -119,7 +113,7 @@ my $def = {
   'DE_min_median_read_smallRNA' => 5,
   
   #report
-  perform_report => 1,
+  'perform_report' => 1,
 
   #data
   'files' => {

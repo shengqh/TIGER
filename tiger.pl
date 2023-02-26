@@ -8,11 +8,13 @@ use Pipeline::SmallRNAUtils;
 use CQS::ClassFactory;
 
 my $smallrna_db="/data/cqs/references/smallrna";
-my $blast_db="/scratch/cqs/shengq2/references/blastdb";
 my $singularity_image="/data/cqs/softwares/singularity/cqs-smallRNA.simg";
+my $report_image="/data/cqs/softwares/singularity/report.sif";
+my $binding_folder="/scratch,/data";
 
 my $def = {
-  docker_command => "singularity exec -e $singularity_image ",
+  'docker_command' => "singularity exec -e -B $binding_folder -H `pwd` $singularity_image ",
+  'report_docker_command' => "singularity exec -e -B $binding_folder -H `pwd` $report_image ",
 
   #task_name of the project. Don't contain space in the name which may cause problem.
   'task_name'  => 'test_proj',
@@ -32,7 +34,7 @@ my $def = {
   #preprocessing
   
   #is paired end data?
-  is_paired_end => 0,
+  'is_paired_end' => 0,
 
   #remove terminal 'N' in fastq reads
   'fastq_remove_N'      => 1,
@@ -65,7 +67,7 @@ my $def = {
   'coordinate'           => "$smallrna_db/mm10_miRBase22_GtRNAdb2_gencode24_ncbi.bed",
   'coordinate_fasta'     => "$smallrna_db/mm10_miRBase22_GtRNAdb2_gencode24_ncbi.bed.fa",
   'hasSnoRNA'            => 1,
-  'hasYRNA'              => 0,
+  'hasYRNA'              => 0, #set to 1 for hg38 or hg19
   'hasSnRNA'             => 1,
 
   #non-host genome
@@ -81,12 +83,12 @@ my $def = {
   'search_refseq_bacteria' => 0,
 
   #virus
-  bowtie1_virus_group6_index => "$smallrna_db/20200305_viral_genomes",
-  virus_group6_species_map   => "$smallrna_db/20200305_viral_genomes.map",
+  'bowtie1_virus_group6_index' => "$smallrna_db/20200305_viral_genomes",
+  'virus_group6_species_map'   => "$smallrna_db/20200305_viral_genomes.map",
 
   #algae database
-  bowtie1_algae_group5_index => "$smallrna_db/20200214_AlgaeSpeciesAll.species",
-  algae_group5_species_map   => "$smallrna_db/20200214_AlgaeSpeciesAll.species.map",
+  'bowtie1_algae_group5_index' => "$smallrna_db/20200214_AlgaeSpeciesAll.species",
+  'algae_group5_species_map'   => "$smallrna_db/20200214_AlgaeSpeciesAll.species.map",
 
   #non-host library
   'search_nonhost_library' => 1,
@@ -99,12 +101,8 @@ my $def = {
   'bowtie1_rRNA_index'     => "$smallrna_db/SILVA_128.rmdup",
   'rrna_category_map'      => "$smallrna_db/SILVA_128.rmdup.category.map",
 
-  #blast
-  'blast_top_reads'      => 0,
-  'blast_localdb'        => $blast_db,
-  'blast_unmapped_reads' => 0,
-
   #differential expression
+  #If you don't want to perform comparison, remove the definition of 'pairs'.
   'DE_pvalue'                   => '0.05',
   'DE_fold_change'              => '1.5',
   'DE_detected_in_both_group'   => 1,
@@ -119,7 +117,7 @@ my $def = {
   'DE_min_median_read_smallRNA' => 5,
   
   #report
-  perform_report => 1,
+  'perform_report' => 1,
 
   #data
   'files' => {
@@ -130,6 +128,7 @@ my $def = {
     'Treat_5' => [ '/scratch/cqs/pipeline_example/smallrna_data/S5_R1_001.fastq.gz' ],
     'Treat_6' => [ '/scratch/cqs/pipeline_example/smallrna_data/S6_R1_001.fastq.gz' ],
   },
+  
   'groups_pattern' => {
     'Ctrl'  => "Ctrl",
     'Treat'   => "Treat",
@@ -140,7 +139,7 @@ my $def = {
   #   'Treat' => ["Treat_4","Treat_5","Treat_6"],
   # },
 
-  #define comparison
+  #define comparison. 
   'pairs' => {
     'Treat_vs_Ctrl' => {
       #the first group would be control group

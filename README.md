@@ -44,7 +44,8 @@ export PERL5LIB=/home/shengq2/program/ngsperl/lib:/home/shengq2/perl5/lib/perl5:
 For all other software used in pipeline, you will need to use singularity image.
 
 ```
-singularity build cqs-smallRNA.simg shengqh/bioinfo:cqs-smallRNA
+singularity build cqs-smallRNA.simg docker://shengqh/bioinfo:cqs-smallRNA
+singularity build report.sif docker://shengqh/report
 ```
 
 ## database

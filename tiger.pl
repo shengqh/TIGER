@@ -45,7 +45,7 @@ my $def = {
   #trimming reads or not
   'perform_cutadapt'    => 1,
   
-  #remove random bases before adapter trimming (NextFlex), set to 0 if no bases need to be removed (TruSeq).
+  #remove random bases before adapter trimming (NextFlex), set to 0 if no bases need to be removed (for example, TruSeq).
   'fastq_remove_random' => 4,
   
   #trimming adapter
@@ -128,7 +128,7 @@ my $def = {
     'Treat_5' => [ '/scratch/cqs/pipeline_example/smallrna_data/S5_R1_001.fastq.gz' ],
     'Treat_6' => [ '/scratch/cqs/pipeline_example/smallrna_data/S6_R1_001.fastq.gz' ],
   },
-  
+
   'groups_pattern' => {
     'Ctrl'  => "Ctrl",
     'Treat'   => "Treat",

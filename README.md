@@ -31,7 +31,7 @@ You also need to download ngsperl package from github server. I downloaded it in
 cd /home/shengq2/program
 git clone https://github.com/shengqh/ngsperl.git
 cd ngsperl
-sh install_packages_nosudo.sh
+bash install_packages_nosudo.sh
 ```
 
 Please remember to add the folders to perl path in your .bashrc file, for example
@@ -90,7 +90,13 @@ perl tiger.pl
 ```
 Once you generate the folder and scripts, go to the sequencetask/pbs folder. There are two choices you can run the project:
 * Run the \_pipeline_st.pbs which will run all tasks in pipeline sequentially. 
-  sh XXXXX_pipeline_st.pbs
+
+```bash
+bash XXXXX_pipeline_st.pbs
+```
 
 * Run the \_pipeline_st.pbs.submit to submit all jobs to cluster with dependency.
-  sh XXXXX_pipeline_st.pbs.submit
+
+```bash
+bash XXXXX_pipeline_st.pbs.submit
+```
